@@ -6,7 +6,13 @@ namespace RastreadorBiblioteca
 {
     class TimeModelo
     {
-        public List<Pessoa> MembrosTime { get; set; } = new List<Pessoa>();
+        /// <summary>
+        /// Lista dos membros que irão compor o time
+        /// </summary>
+        public List<PessoaModelo> MembrosTime { get; set; } = new List<PessoaModelo>();
+        /// <summary>
+        /// Nome do time dentro do torneio
+        /// </summary>
         public string NomeTime { get; set; }
     }
 }

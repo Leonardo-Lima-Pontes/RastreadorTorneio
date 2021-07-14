@@ -4,7 +4,7 @@ using System.Text;
 
 namespace RastreadorBiblioteca
 {
-    class TorneioModelo
+    public class TorneioModelo
     {
         /// <summary>
         /// Nome do torneio

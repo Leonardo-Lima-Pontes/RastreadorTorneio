@@ -4,7 +4,7 @@ using System.Text;
 
 namespace RastreadorBiblioteca
 {
-    class PessoaModelo
+    public class PessoaModelo
     {
         /// <summary>
         /// Nome do membro do time

@@ -17,7 +17,10 @@ namespace TorneioUI
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FumularioVisualizadorTorneio());
+
+            RastreadorBiblioteca.ConfiguracaoGlobal.IniciarConexoes(true, true);
+            Application.Run(new FormularioCriarPremio());
+            //Application.Run(new FormularioInicial());
         }
     }
 }

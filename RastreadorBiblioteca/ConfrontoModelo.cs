@@ -4,7 +4,7 @@ using System.Text;
 
 namespace RastreadorBiblioteca
 {
-    class ConfrontoModelo
+    public class ConfrontoModelo
     {
         /// <summary>
         /// 

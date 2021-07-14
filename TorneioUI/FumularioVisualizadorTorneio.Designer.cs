@@ -29,6 +29,7 @@ namespace TorneioUI
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FumularioVisualizadorTorneio));
             this.CabecalhoLabel = new System.Windows.Forms.Label();
             this.NomeTorneio = new System.Windows.Forms.Label();
             this.RodadaLabel = new System.Windows.Forms.Label();
@@ -42,7 +43,7 @@ namespace TorneioUI
             this.PontuacaoTimeDoisLabel = new System.Windows.Forms.Label();
             this.TimeDoisLabel = new System.Windows.Forms.Label();
             this.ContraLabel = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.PontuacaoButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // CabecalhoLabel
@@ -181,20 +182,20 @@ namespace TorneioUI
             this.ContraLabel.TabIndex = 13;
             this.ContraLabel.Text = "-X-";
             // 
-            // button1
+            // PontuacaoButton
             // 
-            this.button1.FlatAppearance.BorderColor = System.Drawing.Color.Silver;
-            this.button1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
-            this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Segoe UI Semibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.button1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(153)))), ((int)(((byte)(255)))));
-            this.button1.Location = new System.Drawing.Point(601, 331);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(135, 42);
-            this.button1.TabIndex = 14;
-            this.button1.Text = "Pontuação";
-            this.button1.UseVisualStyleBackColor = true;
+            this.PontuacaoButton.FlatAppearance.BorderColor = System.Drawing.Color.Silver;
+            this.PontuacaoButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
+            this.PontuacaoButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.PontuacaoButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.PontuacaoButton.Font = new System.Drawing.Font("Segoe UI Semibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.PontuacaoButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(153)))), ((int)(((byte)(255)))));
+            this.PontuacaoButton.Location = new System.Drawing.Point(601, 331);
+            this.PontuacaoButton.Name = "PontuacaoButton";
+            this.PontuacaoButton.Size = new System.Drawing.Size(135, 42);
+            this.PontuacaoButton.TabIndex = 14;
+            this.PontuacaoButton.Text = "Pontuação";
+            this.PontuacaoButton.UseVisualStyleBackColor = true;
             // 
             // FumularioVisualizadorTorneio
             // 
@@ -202,7 +203,7 @@ namespace TorneioUI
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(756, 477);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.PontuacaoButton);
             this.Controls.Add(this.ContraLabel);
             this.Controls.Add(this.PontuacaoTimeDoisTextBox);
             this.Controls.Add(this.PontuacaoTimeDoisLabel);
@@ -217,6 +218,7 @@ namespace TorneioUI
             this.Controls.Add(this.NomeTorneio);
             this.Controls.Add(this.CabecalhoLabel);
             this.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.Name = "FumularioVisualizadorTorneio";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -241,7 +243,7 @@ namespace TorneioUI
         private System.Windows.Forms.Label PontuacaoTimeDoisLabel;
         private System.Windows.Forms.Label TimeDoisLabel;
         private System.Windows.Forms.Label ContraLabel;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button PontuacaoButton;
     }
 }
 

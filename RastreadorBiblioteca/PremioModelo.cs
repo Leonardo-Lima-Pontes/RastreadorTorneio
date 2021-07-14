@@ -4,8 +4,12 @@ using System.Text;
 
 namespace RastreadorBiblioteca
 {
-    class PremioModelo
+    public class PremioModelo
     {
+        /// <summary>
+        /// O indenficador unido do prêmio
+        /// </summary>
+        public int Id { get; set; }
         /// <summary>
         /// Qual é a colocação do membro do time
         /// </summary>
@@ -22,5 +26,26 @@ namespace RastreadorBiblioteca
         /// Qual é a porcentagem do preio
         /// </summary>
         public double PremioPorcentagem { get; set; }
+
+        public PremioModelo()
+        {
+        }
+
+        public PremioModelo(string numeroColocacao, string colocacaoNome, string premioValor, string premioPorcentagem)
+        {
+            ColocacaoNome = colocacaoNome;
+
+            int numeroColocacaoValor = 0;
+            int.TryParse(numeroColocacao, out numeroColocacaoValor);
+            NumeroColocacao = numeroColocacaoValor;
+
+            decimal premioValorValor = 0;
+            decimal.TryParse(premioValor, out premioValorValor);
+            PremioValor = premioValorValor;
+
+            double premioPorcentagemValor = 0;
+            double.TryParse(premioPorcentagem, out premioPorcentagemValor);
+            PremioPorcentagem = premioPorcentagemValor;
+        }
     }
 }

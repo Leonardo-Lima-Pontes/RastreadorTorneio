@@ -4,7 +4,7 @@ using System.Text;
 
 namespace RastreadorBiblioteca
 {
-    class EntradaConfrontoModelo
+    public class EntradaConfrontoModelo
     {
         /// <summary>
         /// Representa um time no confronto

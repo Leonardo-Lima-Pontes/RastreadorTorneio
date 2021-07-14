@@ -8,16 +8,11 @@ using System.Windows.Forms;
 
 namespace TorneioUI
 {
-    public partial class FormularioCriacaoTorneio : Form
+    public partial class FormularioInicial : Form
     {
-        public FormularioCriacaoTorneio()
+        public FormularioInicial()
         {
             InitializeComponent();
-        }
-
-        private void PontuacaoTimeUmLabel_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

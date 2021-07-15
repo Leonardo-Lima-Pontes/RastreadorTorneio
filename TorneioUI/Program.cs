@@ -18,6 +18,7 @@ namespace TorneioUI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            //Inicia as conenexões com as respectivas bases de dados, no caso sql server e arquivo de texto
             RastreadorBiblioteca.ConfiguracaoGlobal.IniciarConexoes(true, true);
             Application.Run(new FormularioCriarPremio());
             //Application.Run(new FormularioInicial());

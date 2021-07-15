@@ -1,8 +1,9 @@
-﻿using System;
+﻿using RastreadorBiblioteca.Modelos;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace RastreadorBiblioteca
+namespace RastreadorBiblioteca.AcessoDeDados
 {
     public interface IConexaoDeDados
     {

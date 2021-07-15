@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace RastreadorBiblioteca
+namespace RastreadorBiblioteca.Modelos
 {
     public class EntradaConfrontoModelo
     {

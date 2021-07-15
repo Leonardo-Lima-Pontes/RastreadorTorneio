@@ -1,4 +1,6 @@
 ﻿using RastreadorBiblioteca;
+using RastreadorBiblioteca.AcessoDeDados;
+using RastreadorBiblioteca.Modelos;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -26,10 +28,7 @@ namespace TorneioUI
                     MontantePremioTextBox.Text,
                     PorcentagemPremioTextBox.Text);
 
-                foreach (IConexaoDeDados bd in ConfiguracaoGlobal.Conexoes)
-                {
-                    bd.CriaPremio(premio);
-                }
+                ConfiguracaoGlobal.Conexao.CriaPremio(premio);
 
                 NumeroColocacaoTextBox.Text = "";
                 NomeColocacaoTextBox.Text = "";

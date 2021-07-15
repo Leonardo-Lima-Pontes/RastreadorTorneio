@@ -1,3 +1,4 @@
+using RastreadorBiblioteca;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace TorneioUI
             Application.SetCompatibleTextRenderingDefault(false);
 
             //Inicia as conenexões com as respectivas bases de dados, no caso sql server e arquivo de texto
-            RastreadorBiblioteca.ConfiguracaoGlobal.IniciarConexoes(true, true);
+            RastreadorBiblioteca.ConfiguracaoGlobal.IniciarConexoes(TipoBaseDeDados.Sql);
             Application.Run(new FormularioCriarPremio());
             //Application.Run(new FormularioInicial());
         }

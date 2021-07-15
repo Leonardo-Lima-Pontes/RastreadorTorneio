@@ -1,10 +1,11 @@
-﻿using System;
+﻿using RastreadorBiblioteca.Modelos;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace RastreadorBiblioteca
+namespace RastreadorBiblioteca.AcessoDeDados
 {
-    public class TextConector : IConexaoDeDados
+    public class TextoConector : IConexaoDeDados
     {
         // TODO - criar o médotdo CriarPremio para arquivo de texto
         public PremioModelo CriaPremio(PremioModelo modelo)

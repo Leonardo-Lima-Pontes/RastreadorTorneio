@@ -2,15 +2,34 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using RastreadorBiblioteca.AcessoDeDados.ConectorDeTexto;
+using System.Linq;
 
 namespace RastreadorBiblioteca.AcessoDeDados
 {
     public class TextoConector : IConexaoDeDados
     {
-        // TODO - criar o médotdo CriarPremio para arquivo de texto
+
+        private const string PremioArquivo = "PremioModelo.csv";
+
+
         public PremioModelo CriaPremio(PremioModelo modelo)
         {
-            modelo.Id = 1;
+            List<PremioModelo> premios =  PremioArquivo.CaminhoArquivoCompleto().CarregarArquivo().ConverterParaPremioModelo();
+
+            int idAtual = 1;
+
+            if (premios.Count > 0)
+            {
+                idAtual = premios.OrderByDescending(x => x.Id).First().Id + 1;
+            }
+
+            modelo.Id = idAtual;
+
+            premios.Add(modelo);
+
+            premios.SalvarParaPremioArquivo(PremioArquivo);
+
             return modelo;
         }
     }

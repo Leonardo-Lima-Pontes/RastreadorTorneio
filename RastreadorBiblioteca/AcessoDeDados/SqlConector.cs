@@ -9,6 +9,26 @@ namespace RastreadorBiblioteca.AcessoDeDados
 {
     public class SqlConector : IConexaoDeDados
     {
+        public PessoaModelo CriaPessoa(PessoaModelo pessoa)
+        {
+            using (IDbConnection conexao = new System.Data.SqlClient.SqlConnection(ConfiguracaoGlobal.ConexaoString("Torneio")))
+            {
+                var p = new DynamicParameters();
+                p.Add("@PrimeiroNome", pessoa.PrimeiroNome);
+                p.Add("@UltimoNome", pessoa.UltimoNome);
+                p.Add("@Telefone", pessoa.Telefone);
+                p.Add("@Email", pessoa.Email);
+                p.Add("@DataCriacao", pessoa.DataCriacao);
+                p.Add("@id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
+
+                conexao.Execute("dbo.spPessoas_Insercao", p, commandType: CommandType.StoredProcedure);
+
+                pessoa.Id = p.Get<int>("@id");
+
+                return pessoa;
+            }
+        }
+
         //  TODO - fazer o metodo CriarPremio salvar no banco de dados
         /// <summary>
         /// Salva um novo prêmio na base de dados

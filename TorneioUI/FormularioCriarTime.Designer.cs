@@ -36,19 +36,19 @@ namespace TorneioUI
             this.CabecalhoLabel = new System.Windows.Forms.Label();
             this.SelecionarJogadorLabel = new System.Windows.Forms.Label();
             this.JogadorInformacoesGroupBox = new System.Windows.Forms.GroupBox();
+            this.TelefoneTextBox = new System.Windows.Forms.TextBox();
+            this.EmailTextBox = new System.Windows.Forms.TextBox();
+            this.UltimoNomeTextBox = new System.Windows.Forms.TextBox();
+            this.PrimeiroNomeTextBox = new System.Windows.Forms.TextBox();
+            this.TelefoneLabel = new System.Windows.Forms.Label();
+            this.EmailLabel = new System.Windows.Forms.Label();
+            this.UltimoNomeLabel = new System.Windows.Forms.Label();
+            this.PrimeiroNomeLabel = new System.Windows.Forms.Label();
+            this.CriarJogadorButton = new System.Windows.Forms.Button();
             this.ListaDeJogadoresListBox = new System.Windows.Forms.ListBox();
             this.DeletearJogadorSelecionadoButton = new System.Windows.Forms.Button();
-            this.CriarJogadorButton = new System.Windows.Forms.Button();
             this.CriarTimeButton = new System.Windows.Forms.Button();
             this.SelecionarJogadorComboBox = new System.Windows.Forms.ComboBox();
-            this.PrimeiroNomeLabel = new System.Windows.Forms.Label();
-            this.UltimoNomeLabel = new System.Windows.Forms.Label();
-            this.EmailLabel = new System.Windows.Forms.Label();
-            this.TelefoneLabel = new System.Windows.Forms.Label();
-            this.PrimeiroNomeTextBox = new System.Windows.Forms.TextBox();
-            this.UltimoNomeTextBox = new System.Windows.Forms.TextBox();
-            this.EmailTextBox = new System.Windows.Forms.TextBox();
-            this.TelefoneTextBox = new System.Windows.Forms.TextBox();
             this.JogadorInformacoesGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -128,6 +128,94 @@ namespace TorneioUI
             this.JogadorInformacoesGroupBox.TabStop = false;
             this.JogadorInformacoesGroupBox.Text = "groupBox1";
             // 
+            // TelefoneTextBox
+            // 
+            this.TelefoneTextBox.Location = new System.Drawing.Point(123, 157);
+            this.TelefoneTextBox.Name = "TelefoneTextBox";
+            this.TelefoneTextBox.Size = new System.Drawing.Size(138, 29);
+            this.TelefoneTextBox.TabIndex = 35;
+            // 
+            // EmailTextBox
+            // 
+            this.EmailTextBox.Location = new System.Drawing.Point(123, 120);
+            this.EmailTextBox.Name = "EmailTextBox";
+            this.EmailTextBox.Size = new System.Drawing.Size(138, 29);
+            this.EmailTextBox.TabIndex = 34;
+            // 
+            // UltimoNomeTextBox
+            // 
+            this.UltimoNomeTextBox.Location = new System.Drawing.Point(123, 83);
+            this.UltimoNomeTextBox.Name = "UltimoNomeTextBox";
+            this.UltimoNomeTextBox.Size = new System.Drawing.Size(138, 29);
+            this.UltimoNomeTextBox.TabIndex = 33;
+            // 
+            // PrimeiroNomeTextBox
+            // 
+            this.PrimeiroNomeTextBox.Location = new System.Drawing.Point(123, 46);
+            this.PrimeiroNomeTextBox.Name = "PrimeiroNomeTextBox";
+            this.PrimeiroNomeTextBox.Size = new System.Drawing.Size(138, 29);
+            this.PrimeiroNomeTextBox.TabIndex = 29;
+            // 
+            // TelefoneLabel
+            // 
+            this.TelefoneLabel.AutoSize = true;
+            this.TelefoneLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.TelefoneLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(153)))), ((int)(((byte)(255)))));
+            this.TelefoneLabel.Location = new System.Drawing.Point(6, 161);
+            this.TelefoneLabel.Name = "TelefoneLabel";
+            this.TelefoneLabel.Size = new System.Drawing.Size(75, 20);
+            this.TelefoneLabel.TabIndex = 32;
+            this.TelefoneLabel.Text = "Telefone:";
+            // 
+            // EmailLabel
+            // 
+            this.EmailLabel.AutoSize = true;
+            this.EmailLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.EmailLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(153)))), ((int)(((byte)(255)))));
+            this.EmailLabel.Location = new System.Drawing.Point(6, 124);
+            this.EmailLabel.Name = "EmailLabel";
+            this.EmailLabel.Size = new System.Drawing.Size(52, 20);
+            this.EmailLabel.TabIndex = 31;
+            this.EmailLabel.Text = "Email:";
+            // 
+            // UltimoNomeLabel
+            // 
+            this.UltimoNomeLabel.AutoSize = true;
+            this.UltimoNomeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.UltimoNomeLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(153)))), ((int)(((byte)(255)))));
+            this.UltimoNomeLabel.Location = new System.Drawing.Point(6, 87);
+            this.UltimoNomeLabel.Name = "UltimoNomeLabel";
+            this.UltimoNomeLabel.Size = new System.Drawing.Size(102, 20);
+            this.UltimoNomeLabel.TabIndex = 30;
+            this.UltimoNomeLabel.Text = "Ultimo nome:";
+            // 
+            // PrimeiroNomeLabel
+            // 
+            this.PrimeiroNomeLabel.AutoSize = true;
+            this.PrimeiroNomeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.PrimeiroNomeLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(153)))), ((int)(((byte)(255)))));
+            this.PrimeiroNomeLabel.Location = new System.Drawing.Point(6, 50);
+            this.PrimeiroNomeLabel.Name = "PrimeiroNomeLabel";
+            this.PrimeiroNomeLabel.Size = new System.Drawing.Size(114, 20);
+            this.PrimeiroNomeLabel.TabIndex = 29;
+            this.PrimeiroNomeLabel.Text = "Primeiro nome:";
+            // 
+            // CriarJogadorButton
+            // 
+            this.CriarJogadorButton.FlatAppearance.BorderColor = System.Drawing.Color.Silver;
+            this.CriarJogadorButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
+            this.CriarJogadorButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.CriarJogadorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.CriarJogadorButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.CriarJogadorButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(153)))), ((int)(((byte)(255)))));
+            this.CriarJogadorButton.Location = new System.Drawing.Point(60, 208);
+            this.CriarJogadorButton.Name = "CriarJogadorButton";
+            this.CriarJogadorButton.Size = new System.Drawing.Size(146, 42);
+            this.CriarJogadorButton.TabIndex = 26;
+            this.CriarJogadorButton.Text = "Criar jogador";
+            this.CriarJogadorButton.UseVisualStyleBackColor = true;
+            this.CriarJogadorButton.Click += new System.EventHandler(this.CriarJogadorButton_Click);
+            // 
             // ListaDeJogadoresListBox
             // 
             this.ListaDeJogadoresListBox.FormattingEnabled = true;
@@ -152,21 +240,6 @@ namespace TorneioUI
             this.DeletearJogadorSelecionadoButton.Text = "Deletar Selecionado";
             this.DeletearJogadorSelecionadoButton.UseVisualStyleBackColor = true;
             // 
-            // CriarJogadorButton
-            // 
-            this.CriarJogadorButton.FlatAppearance.BorderColor = System.Drawing.Color.Silver;
-            this.CriarJogadorButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
-            this.CriarJogadorButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
-            this.CriarJogadorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CriarJogadorButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.CriarJogadorButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(153)))), ((int)(((byte)(255)))));
-            this.CriarJogadorButton.Location = new System.Drawing.Point(60, 208);
-            this.CriarJogadorButton.Name = "CriarJogadorButton";
-            this.CriarJogadorButton.Size = new System.Drawing.Size(146, 42);
-            this.CriarJogadorButton.TabIndex = 26;
-            this.CriarJogadorButton.Text = "Criar jogador";
-            this.CriarJogadorButton.UseVisualStyleBackColor = true;
-            // 
             // CriarTimeButton
             // 
             this.CriarTimeButton.FlatAppearance.BorderColor = System.Drawing.Color.Silver;
@@ -189,78 +262,6 @@ namespace TorneioUI
             this.SelecionarJogadorComboBox.Name = "SelecionarJogadorComboBox";
             this.SelecionarJogadorComboBox.Size = new System.Drawing.Size(272, 38);
             this.SelecionarJogadorComboBox.TabIndex = 28;
-            // 
-            // PrimeiroNomeLabel
-            // 
-            this.PrimeiroNomeLabel.AutoSize = true;
-            this.PrimeiroNomeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.PrimeiroNomeLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(153)))), ((int)(((byte)(255)))));
-            this.PrimeiroNomeLabel.Location = new System.Drawing.Point(6, 50);
-            this.PrimeiroNomeLabel.Name = "PrimeiroNomeLabel";
-            this.PrimeiroNomeLabel.Size = new System.Drawing.Size(114, 20);
-            this.PrimeiroNomeLabel.TabIndex = 29;
-            this.PrimeiroNomeLabel.Text = "Primeiro nome:";
-            // 
-            // UltimoNomeLabel
-            // 
-            this.UltimoNomeLabel.AutoSize = true;
-            this.UltimoNomeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.UltimoNomeLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(153)))), ((int)(((byte)(255)))));
-            this.UltimoNomeLabel.Location = new System.Drawing.Point(6, 87);
-            this.UltimoNomeLabel.Name = "UltimoNomeLabel";
-            this.UltimoNomeLabel.Size = new System.Drawing.Size(102, 20);
-            this.UltimoNomeLabel.TabIndex = 30;
-            this.UltimoNomeLabel.Text = "Ultimo nome:";
-            // 
-            // EmailLabel
-            // 
-            this.EmailLabel.AutoSize = true;
-            this.EmailLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.EmailLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(153)))), ((int)(((byte)(255)))));
-            this.EmailLabel.Location = new System.Drawing.Point(6, 124);
-            this.EmailLabel.Name = "EmailLabel";
-            this.EmailLabel.Size = new System.Drawing.Size(52, 20);
-            this.EmailLabel.TabIndex = 31;
-            this.EmailLabel.Text = "Email:";
-            // 
-            // TelefoneLabel
-            // 
-            this.TelefoneLabel.AutoSize = true;
-            this.TelefoneLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.TelefoneLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(153)))), ((int)(((byte)(255)))));
-            this.TelefoneLabel.Location = new System.Drawing.Point(6, 161);
-            this.TelefoneLabel.Name = "TelefoneLabel";
-            this.TelefoneLabel.Size = new System.Drawing.Size(75, 20);
-            this.TelefoneLabel.TabIndex = 32;
-            this.TelefoneLabel.Text = "Telefone:";
-            // 
-            // PrimeiroNomeTextBox
-            // 
-            this.PrimeiroNomeTextBox.Location = new System.Drawing.Point(123, 46);
-            this.PrimeiroNomeTextBox.Name = "PrimeiroNomeTextBox";
-            this.PrimeiroNomeTextBox.Size = new System.Drawing.Size(138, 29);
-            this.PrimeiroNomeTextBox.TabIndex = 29;
-            // 
-            // UltimoNomeTextBox
-            // 
-            this.UltimoNomeTextBox.Location = new System.Drawing.Point(123, 83);
-            this.UltimoNomeTextBox.Name = "UltimoNomeTextBox";
-            this.UltimoNomeTextBox.Size = new System.Drawing.Size(138, 29);
-            this.UltimoNomeTextBox.TabIndex = 33;
-            // 
-            // EmailTextBox
-            // 
-            this.EmailTextBox.Location = new System.Drawing.Point(123, 120);
-            this.EmailTextBox.Name = "EmailTextBox";
-            this.EmailTextBox.Size = new System.Drawing.Size(138, 29);
-            this.EmailTextBox.TabIndex = 34;
-            // 
-            // TelefoneTextBox
-            // 
-            this.TelefoneTextBox.Location = new System.Drawing.Point(123, 157);
-            this.TelefoneTextBox.Name = "TelefoneTextBox";
-            this.TelefoneTextBox.Size = new System.Drawing.Size(138, 29);
-            this.TelefoneTextBox.TabIndex = 35;
             // 
             // FormularioCriarTime
             // 

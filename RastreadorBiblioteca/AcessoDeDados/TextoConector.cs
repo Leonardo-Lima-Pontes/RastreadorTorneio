@@ -11,7 +11,27 @@ namespace RastreadorBiblioteca.AcessoDeDados
     {
 
         private const string PremioArquivo = "PremioModelo.csv";
+        private const string PessoaArquivo = "PessoaModelo.csv";
 
+        public PessoaModelo CriaPessoa(PessoaModelo modelo)
+        {
+            List<PessoaModelo> pessoas = PessoaArquivo.CaminhoArquivoCompleto().CarregarArquivo().ConverterParaPessoaModelo();
+
+            int idAtual = 1;
+
+            if (pessoas.Count > 0)
+            {
+                idAtual = pessoas.OrderByDescending(x => x.Id).First().Id + 1;
+            }
+
+            modelo.Id = idAtual;
+
+            pessoas.Add(modelo);
+
+            pessoas.SalvarParaPessoaArquivo(PessoaArquivo);
+
+            return modelo;
+        }
 
         public PremioModelo CriaPremio(PremioModelo modelo)
         {

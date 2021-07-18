@@ -7,6 +7,8 @@ namespace RastreadorBiblioteca.AcessoDeDados
 {
     public interface IConexaoDeDados
     {
-       PremioModelo CriaPremio(PremioModelo modelo);
+        PremioModelo CriaPremio(PremioModelo modelo);
+
+        PessoaModelo CriaPessoa(PessoaModelo pessoa);
     }
 }

@@ -46,7 +46,7 @@ namespace TorneioUI
             this.PrimeiroNomeLabel = new System.Windows.Forms.Label();
             this.CriarJogadorButton = new System.Windows.Forms.Button();
             this.ListaDeJogadoresListBox = new System.Windows.Forms.ListBox();
-            this.DeletearJogadorSelecionadoButton = new System.Windows.Forms.Button();
+            this.RemoverJogadorSelecionadoButton = new System.Windows.Forms.Button();
             this.CriarTimeButton = new System.Windows.Forms.Button();
             this.SelecionarJogadorComboBox = new System.Windows.Forms.ComboBox();
             this.JogadorInformacoesGroupBox.SuspendLayout();
@@ -126,7 +126,7 @@ namespace TorneioUI
             this.JogadorInformacoesGroupBox.Size = new System.Drawing.Size(272, 256);
             this.JogadorInformacoesGroupBox.TabIndex = 23;
             this.JogadorInformacoesGroupBox.TabStop = false;
-            this.JogadorInformacoesGroupBox.Text = "groupBox1";
+            this.JogadorInformacoesGroupBox.Text = "Cadastro de Jogador";
             // 
             // TelefoneTextBox
             // 
@@ -225,20 +225,21 @@ namespace TorneioUI
             this.ListaDeJogadoresListBox.Size = new System.Drawing.Size(265, 484);
             this.ListaDeJogadoresListBox.TabIndex = 24;
             // 
-            // DeletearJogadorSelecionadoButton
+            // RemoverJogadorSelecionadoButton
             // 
-            this.DeletearJogadorSelecionadoButton.FlatAppearance.BorderColor = System.Drawing.Color.Silver;
-            this.DeletearJogadorSelecionadoButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
-            this.DeletearJogadorSelecionadoButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
-            this.DeletearJogadorSelecionadoButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.DeletearJogadorSelecionadoButton.Font = new System.Drawing.Font("Segoe UI Semibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.DeletearJogadorSelecionadoButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(153)))), ((int)(((byte)(255)))));
-            this.DeletearJogadorSelecionadoButton.Location = new System.Drawing.Point(618, 324);
-            this.DeletearJogadorSelecionadoButton.Name = "DeletearJogadorSelecionadoButton";
-            this.DeletearJogadorSelecionadoButton.Size = new System.Drawing.Size(146, 70);
-            this.DeletearJogadorSelecionadoButton.TabIndex = 25;
-            this.DeletearJogadorSelecionadoButton.Text = "Deletar Selecionado";
-            this.DeletearJogadorSelecionadoButton.UseVisualStyleBackColor = true;
+            this.RemoverJogadorSelecionadoButton.FlatAppearance.BorderColor = System.Drawing.Color.Silver;
+            this.RemoverJogadorSelecionadoButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
+            this.RemoverJogadorSelecionadoButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.RemoverJogadorSelecionadoButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.RemoverJogadorSelecionadoButton.Font = new System.Drawing.Font("Segoe UI Semibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.RemoverJogadorSelecionadoButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(153)))), ((int)(((byte)(255)))));
+            this.RemoverJogadorSelecionadoButton.Location = new System.Drawing.Point(618, 324);
+            this.RemoverJogadorSelecionadoButton.Name = "RemoverJogadorSelecionadoButton";
+            this.RemoverJogadorSelecionadoButton.Size = new System.Drawing.Size(146, 70);
+            this.RemoverJogadorSelecionadoButton.TabIndex = 25;
+            this.RemoverJogadorSelecionadoButton.Text = "Remover Selecionado";
+            this.RemoverJogadorSelecionadoButton.UseVisualStyleBackColor = true;
+            this.RemoverJogadorSelecionadoButton.Click += new System.EventHandler(this.RemoverJogadorSelecionadoButton_Click);
             // 
             // CriarTimeButton
             // 
@@ -271,7 +272,7 @@ namespace TorneioUI
             this.ClientSize = new System.Drawing.Size(766, 687);
             this.Controls.Add(this.SelecionarJogadorComboBox);
             this.Controls.Add(this.CriarTimeButton);
-            this.Controls.Add(this.DeletearJogadorSelecionadoButton);
+            this.Controls.Add(this.RemoverJogadorSelecionadoButton);
             this.Controls.Add(this.ListaDeJogadoresListBox);
             this.Controls.Add(this.JogadorInformacoesGroupBox);
             this.Controls.Add(this.SelecionarJogadorLabel);
@@ -310,7 +311,7 @@ namespace TorneioUI
         private System.Windows.Forms.Label PrimeiroNomeLabel;
         private System.Windows.Forms.Button CriarJogadorButton;
         private System.Windows.Forms.ListBox ListaDeJogadoresListBox;
-        private System.Windows.Forms.Button DeletearJogadorSelecionadoButton;
+        private System.Windows.Forms.Button RemoverJogadorSelecionadoButton;
         private System.Windows.Forms.Button CriarTimeButton;
         private System.Windows.Forms.ComboBox SelecionarJogadorComboBox;
     }

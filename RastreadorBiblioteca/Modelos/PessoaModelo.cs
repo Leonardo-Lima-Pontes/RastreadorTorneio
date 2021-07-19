@@ -35,5 +35,17 @@ namespace RastreadorBiblioteca.Modelos
         /// Data de criação dentro do sistema
         /// </summary>
         public DateTime DataCriacao { get; set; }
+
+        /// <summary>
+        /// Retorna o nome completo
+        /// </summary>
+        public string NomeCompleto
+        {
+            get
+            {
+                return $"{PrimeiroNome} {UltimoNome}";
+            }
+        }
+
     }
 }

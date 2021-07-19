@@ -10,5 +10,7 @@ namespace RastreadorBiblioteca.AcessoDeDados
         PremioModelo CriaPremio(PremioModelo modelo);
 
         PessoaModelo CriaPessoa(PessoaModelo pessoa);
+
+        List<PessoaModelo> SelecionarTodasPessoas();
     }
 }

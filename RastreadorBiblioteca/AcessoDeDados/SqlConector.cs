@@ -3,15 +3,24 @@ using RastreadorBiblioteca.Modelos;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Text;
 
 namespace RastreadorBiblioteca.AcessoDeDados
 {
     public class SqlConector : IConexaoDeDados
     {
+      
+        private const string bd = "Torneio";
+
+        /// <summary>
+        /// Salva uma nova pessoa na base de dados
+        /// </summary>
+        /// <param name="pessoa">Informações de pessoa</param>
+        /// <returns>Informações de pessoa, incluindo o identificador unico</returns>
         public PessoaModelo CriaPessoa(PessoaModelo pessoa)
         {
-            using (IDbConnection conexao = new System.Data.SqlClient.SqlConnection(ConfiguracaoGlobal.ConexaoString("Torneio")))
+            using (IDbConnection conexao = new System.Data.SqlClient.SqlConnection(ConfiguracaoGlobal.ConexaoString(bd)))
             {
                 var p = new DynamicParameters();
                 p.Add("@PrimeiroNome", pessoa.PrimeiroNome);
@@ -37,7 +46,7 @@ namespace RastreadorBiblioteca.AcessoDeDados
         /// <returns>As informações do prêmio, incluindo o identificador unico </returns>
         public PremioModelo CriaPremio(PremioModelo modelo)
         {
-            using (IDbConnection conexao = new System.Data.SqlClient.SqlConnection(ConfiguracaoGlobal.ConexaoString("Torneio")))
+            using (IDbConnection conexao = new System.Data.SqlClient.SqlConnection(ConfiguracaoGlobal.ConexaoString(bd)))
             {
                 var p = new DynamicParameters();
                 p.Add("@NumeroColocacao", modelo.NumeroColocacao);
@@ -52,6 +61,22 @@ namespace RastreadorBiblioteca.AcessoDeDados
 
                 return modelo;
             }
+        }
+
+        /// <summary>
+        /// Seleciona e retona todos os dados da tebela pessoas do banco de dados
+        /// </summary>
+        /// <returns>Lista de pessoas</returns>
+        public List<PessoaModelo> SelecionarTodasPessoas()
+        {
+            List<PessoaModelo> saidaPessoa;
+
+            using(IDbConnection conexao = new System.Data.SqlClient.SqlConnection(ConfiguracaoGlobal.ConexaoString(bd)))
+            {
+                saidaPessoa = conexao.Query<PessoaModelo>("dbo.spPessoas_SelecionarTudo").ToList();
+            }
+
+            return saidaPessoa;
         }
     }
 }

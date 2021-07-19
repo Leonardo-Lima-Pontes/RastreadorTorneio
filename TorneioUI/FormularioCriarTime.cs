@@ -12,14 +12,39 @@ namespace TorneioUI
 {
     public partial class FormularioCriarTime : Form
     {
+
+        private List<PessoaModelo> pessoasDisponiveis = ConfiguracaoGlobal.Conexao.SelecionarTodasPessoas();
+        private List<PessoaModelo> pessoasSelecionadas = new List<PessoaModelo>();
+
         public FormularioCriarTime()
         {
             InitializeComponent();
+
+            preencherListas();
+        }
+
+        private void preencherListas()
+        {
+            SelecionarJogadorComboBox.DataSource = null;
+            SelecionarJogadorComboBox.DataSource = pessoasDisponiveis;
+            SelecionarJogadorComboBox.DisplayMember = "NomeCompleto";
+
+            ListaDeJogadoresListBox.DataSource = null;
+            ListaDeJogadoresListBox.DataSource = pessoasSelecionadas;
+            ListaDeJogadoresListBox.DisplayMember = "NomeCompleto";
         }
 
         private void AdionarTimeButton_Click(object sender, EventArgs e)
         {
+            PessoaModelo pessoa = (PessoaModelo)SelecionarJogadorComboBox.SelectedItem;
 
+            if (pessoa != null)
+            {
+                pessoasDisponiveis.Remove(pessoa);
+                pessoasSelecionadas.Add(pessoa);
+
+                preencherListas();
+            }
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -38,7 +63,10 @@ namespace TorneioUI
                 pessoa.Email = EmailTextBox.Text;
                 pessoa.DataCriacao = DateTime.Now;
 
-                ConfiguracaoGlobal.Conexao.CriaPessoa(pessoa);
+                pessoa = ConfiguracaoGlobal.Conexao.CriaPessoa(pessoa);
+                pessoasSelecionadas.Add(pessoa);
+
+                preencherListas();
 
                 PrimeiroNomeTextBox.Text = "";
                 UltimoNomeTextBox.Text = "";
@@ -49,7 +77,7 @@ namespace TorneioUI
             {
                 MessageBox.Show("Preencha todos os campos !");
             }
-            
+
         }
 
         private bool ValidarFormulario()
@@ -76,6 +104,18 @@ namespace TorneioUI
             }
 
             return true;
+        }
+
+        private void RemoverJogadorSelecionadoButton_Click(object sender, EventArgs e)
+        {
+            PessoaModelo pessoa = (PessoaModelo)ListaDeJogadoresListBox.SelectedItem;
+            if (pessoa != null)
+            {
+                pessoasDisponiveis.Add(pessoa);
+                pessoasSelecionadas.Remove(pessoa);
+
+                preencherListas();
+            }
         }
     }
 }

@@ -12,6 +12,7 @@ namespace RastreadorBiblioteca.AcessoDeDados
 
         private const string PremioArquivo = "PremioModelo.csv";
         private const string PessoaArquivo = "PessoaModelo.csv";
+        private const string TimeArquivo = "TimeModelo.csv";
 
         public PessoaModelo CriaPessoa(PessoaModelo modelo)
         {
@@ -49,6 +50,26 @@ namespace RastreadorBiblioteca.AcessoDeDados
             premios.Add(modelo);
 
             premios.SalvarParaPremioArquivo(PremioArquivo);
+
+            return modelo;
+        }
+
+        public TimeModelo CriaTime(TimeModelo modelo)
+        {
+            List<TimeModelo> times = TimeArquivo.CaminhoArquivoCompleto().CarregarArquivo().ConverterParaTimeModelo(PessoaArquivo);
+
+            int idAtual = 1;
+
+            if (times.Count > 0)
+            {
+                idAtual = times.OrderByDescending(x => x.Id).First().Id + 1;
+            }
+
+            modelo.Id = idAtual;
+
+            times.Add(modelo);
+
+            times.SalvarParaTimeArquivo(TimeArquivo);
 
             return modelo;
         }

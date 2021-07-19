@@ -44,22 +44,48 @@ namespace RastreadorBiblioteca.AcessoDeDados
         /// </summary>
         /// <param name="modelo">Informações do prêmio</param>
         /// <returns>As informações do prêmio, incluindo o identificador unico </returns>
-        public PremioModelo CriaPremio(PremioModelo modelo)
+        public PremioModelo CriaPremio(PremioModelo premio)
         {
             using (IDbConnection conexao = new System.Data.SqlClient.SqlConnection(ConfiguracaoGlobal.ConexaoString(bd)))
             {
                 var p = new DynamicParameters();
-                p.Add("@NumeroColocacao", modelo.NumeroColocacao);
-                p.Add("@NomeColocacao", modelo.ColocacaoNome);
-                p.Add("@PremioValor", modelo.PremioValor);
-                p.Add("@PremioPorcentagem", modelo.PremioPorcentagem);
+                p.Add("@NumeroColocacao", premio.NumeroColocacao);
+                p.Add("@NomeColocacao", premio.ColocacaoNome);
+                p.Add("@PremioValor", premio.PremioValor);
+                p.Add("@PremioPorcentagem", premio.PremioPorcentagem);
                 p.Add("@id", 0,  dbType: DbType.Int32, direction: ParameterDirection.Output);
 
                 conexao.Execute("dbo.spPremios_Insercao", p, commandType: CommandType.StoredProcedure);
 
-                modelo.Id = p.Get<int>("@id");
+                premio.Id = p.Get<int>("@id");
 
-                return modelo;
+                return premio;
+            }
+        }
+
+        public TimeModelo CriaTime(TimeModelo time)
+        {
+            using (IDbConnection conexao = new System.Data.SqlClient.SqlConnection(ConfiguracaoGlobal.ConexaoString(bd)))
+            {
+                var p = new DynamicParameters();
+                p.Add("@@NomeTime", time.NomeTime);
+                p.Add("@id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
+
+                conexao.Execute("dbo.spTimes_Insercao", p, commandType: CommandType.StoredProcedure);
+
+                time.Id = p.Get<int>("@id");
+
+                foreach (PessoaModelo membroTime in time.MembrosTime)
+                {
+                    p = new DynamicParameters();
+                    p.Add("@TimeId", time.Id);
+                    p.Add("@PessoaId", membroTime.Id);
+                    p.Add("@id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
+
+                    conexao.Execute("dbo.spTimeMembros_Insercao", p, commandType: CommandType.StoredProcedure);
+                }
+
+                return time;
             }
         }
 

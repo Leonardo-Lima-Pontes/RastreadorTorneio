@@ -11,6 +11,10 @@ namespace RastreadorBiblioteca.AcessoDeDados
 
         PessoaModelo CriaPessoa(PessoaModelo pessoa);
 
+        TimeModelo CriaTime(TimeModelo time);
+
         List<PessoaModelo> SelecionarTodasPessoas();
+
+        
     }
 }

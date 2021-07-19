@@ -47,11 +47,6 @@ namespace TorneioUI
             }
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void CriarJogadorButton_Click(object sender, EventArgs e)
         {
             if (ValidarFormulario())
@@ -116,6 +111,18 @@ namespace TorneioUI
 
                 preencherListas();
             }
+        }
+
+        private void CriarTimeButton_Click(object sender, EventArgs e)
+        {
+            TimeModelo time = new TimeModelo();
+
+            time.NomeTime = NomeTimeTextBox.Text;
+            time.MembrosTime = pessoasSelecionadas;
+
+            time = ConfiguracaoGlobal.Conexao.CriaTime(time);
+
+            // TODO - se nós não fecharmos este formulario apos gravar precisaremos resetalo
         }
     }
 }

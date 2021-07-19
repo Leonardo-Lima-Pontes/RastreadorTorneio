@@ -91,6 +91,38 @@ namespace RastreadorBiblioteca.AcessoDeDados.ConectorDeTexto
         }
 
         /// <summary>
+        /// Converte cada linha do arquivo para time
+        /// </summary>
+        /// <param name="lines">linhas do arquivo</param>
+        /// <param name="pessoaNomeArquivo">lista de times</param>
+        /// <returns></returns>
+        public static List<TimeModelo> ConverterParaTimeModelo(this List<string> lines, string pessoaNomeArquivo)
+        {
+            List<TimeModelo> saidaTimeModelo = new List<TimeModelo>();
+            List<PessoaModelo> pessoas = pessoaNomeArquivo.CaminhoArquivoCompleto().CarregarArquivo().ConverterParaPessoaModelo();
+
+            foreach (string line in lines)
+            {
+                string[] colunas = line.Split(',');
+
+                TimeModelo time = new TimeModelo();
+                time.Id = int.Parse(colunas[0]);
+                time.NomeTime = colunas[1];
+
+                string[] pessoaIds = colunas[2].Split('|');
+
+                foreach (string id in pessoaIds)
+                {
+                    time.MembrosTime.Add(pessoas.Where(x => x.Id == int.Parse(id)).First());
+                }
+
+                saidaTimeModelo.Add(time);
+            }
+
+            return saidaTimeModelo;
+        }
+
+        /// <summary>
         /// Salva a lista de premios no caminho especificado
         /// </summary>
         /// <param name="modelos">Lista de premios</param>
@@ -123,5 +155,42 @@ namespace RastreadorBiblioteca.AcessoDeDados.ConectorDeTexto
 
             File.WriteAllLines(nomeArquivo.CaminhoArquivoCompleto(), linhas);
         }
+
+        public static void SalvarParaTimeArquivo(this List<TimeModelo> modelos, string nomeArquivo)
+        {
+            List<string> linhas = new List<string>();
+
+            foreach (TimeModelo time in modelos)
+            {
+                linhas.Add($"{time.Id }, {time.NomeTime}, {ConverterPessoasListaParaString(time.MembrosTime)}");
+            }
+
+            File.WriteAllLines(nomeArquivo.CaminhoArquivoCompleto(), linhas);
+        }
+
+        /// <summary>
+        /// Converte a lista de pessoas para string
+        /// </summary>
+        /// <param name="pessoas">lista de pessoas</param>
+        /// <returns>string (linhas) de pessoas</returns>
+        public static string ConverterPessoasListaParaString(List<PessoaModelo> pessoas)
+        {
+            string pessoasSaida = "";
+
+            if (pessoas.Count == 0)
+            {
+                return "";
+            }
+
+            foreach (PessoaModelo pessoa in pessoas)
+            {
+                pessoasSaida += $"{pessoa.Id} |";
+            }
+
+            pessoasSaida = pessoasSaida.Substring(0, pessoasSaida.Length - 1);
+
+            return pessoasSaida;
+        }
+
     }
 }

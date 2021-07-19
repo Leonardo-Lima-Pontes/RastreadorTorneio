@@ -107,7 +107,6 @@ namespace TorneioUI
             this.SelecionarJogadorLabel.Size = new System.Drawing.Size(246, 37);
             this.SelecionarJogadorLabel.TabIndex = 21;
             this.SelecionarJogadorLabel.Text = "Selecionar jogador:";
-            this.SelecionarJogadorLabel.Click += new System.EventHandler(this.label1_Click);
             // 
             // JogadorInformacoesGroupBox
             // 
@@ -255,6 +254,7 @@ namespace TorneioUI
             this.CriarTimeButton.TabIndex = 27;
             this.CriarTimeButton.Text = "Criar Time";
             this.CriarTimeButton.UseVisualStyleBackColor = true;
+            this.CriarTimeButton.Click += new System.EventHandler(this.CriarTimeButton_Click);
             // 
             // SelecionarJogadorComboBox
             // 

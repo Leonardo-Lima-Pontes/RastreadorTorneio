@@ -104,5 +104,25 @@ namespace RastreadorBiblioteca.AcessoDeDados
 
             return saidaPessoa;
         }
+
+        public List<TimeModelo> SelecionarTodosTimes()
+        {
+            List<TimeModelo> saidaTimes;
+
+            using (IDbConnection conexao = new System.Data.SqlClient.SqlConnection(ConfiguracaoGlobal.ConexaoString(bd)))
+            {
+                saidaTimes = conexao.Query<TimeModelo>("dbo.spTimes_SelecionarTudo").ToList();
+
+                foreach (TimeModelo time in saidaTimes)
+                {
+                    var p = new DynamicParameters();
+                    p.Add("@TimeId", time.Id);
+
+                    time.MembrosTime = conexao.Query<PessoaModelo>("dbo.spTimeMembros_SelecionarPeloTime", p, commandType: CommandType.StoredProcedure).ToList();
+                }
+            }
+
+            return saidaTimes;
+        }
     }
 }

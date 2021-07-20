@@ -13,9 +13,13 @@ namespace TorneioUI
 {
     public partial class FormularioCriarPremio : Form
     {
-        public FormularioCriarPremio()
+        private IPremioSolicitante formularioSolicitante;
+
+        public FormularioCriarPremio(IPremioSolicitante solicitante)
         {
             InitializeComponent();
+
+            formularioSolicitante = solicitante;
         }
 
         private void CriarPremioButton_Click(object sender, EventArgs e)
@@ -30,10 +34,9 @@ namespace TorneioUI
 
                 ConfiguracaoGlobal.Conexao.CriaPremio(premio);
 
-                NumeroColocacaoTextBox.Text = "";
-                NomeColocacaoTextBox.Text = "";
-                MontantePremioTextBox.Text = "0";
-                PorcentagemPremioTextBox.Text = "0";
+                formularioSolicitante.PremioCompleto(premio);
+
+                this.Close();
             }
             else
             {

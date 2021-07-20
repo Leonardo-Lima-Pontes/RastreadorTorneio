@@ -78,5 +78,10 @@ namespace RastreadorBiblioteca.AcessoDeDados
         {
             return PessoaArquivo.CaminhoArquivoCompleto().CarregarArquivo().ConverterParaPessoaModelo();
         }
+
+        public List<TimeModelo> SelecionarTodosTimes()
+        {
+            return TimeArquivo.CaminhoArquivoCompleto().CarregarArquivo().ConverterParaTimeModelo(PessoaArquivo);
+        }
     }
 }

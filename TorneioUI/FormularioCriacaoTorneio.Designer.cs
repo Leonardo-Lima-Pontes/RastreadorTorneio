@@ -77,7 +77,6 @@ namespace TorneioUI
             this.NomeTorneioLabel.Size = new System.Drawing.Size(230, 37);
             this.NomeTorneioLabel.TabIndex = 10;
             this.NomeTorneioLabel.Text = "Nome do Torneio:";
-            this.NomeTorneioLabel.Click += new System.EventHandler(this.PontuacaoTimeUmLabel_Click);
             // 
             // TaxaTorneioTextBox
             // 
@@ -130,6 +129,7 @@ namespace TorneioUI
             this.AdionarTimeButton.TabIndex = 16;
             this.AdionarTimeButton.Text = "Add Time";
             this.AdionarTimeButton.UseVisualStyleBackColor = true;
+            this.AdionarTimeButton.Click += new System.EventHandler(this.AdionarTimeButton_Click);
             // 
             // AdicionarPremioButton
             // 
@@ -145,6 +145,7 @@ namespace TorneioUI
             this.AdicionarPremioButton.TabIndex = 17;
             this.AdicionarPremioButton.Text = "Add Premio";
             this.AdicionarPremioButton.UseVisualStyleBackColor = true;
+            this.AdicionarPremioButton.Click += new System.EventHandler(this.AdicionarPremioButton_Click);
             // 
             // CriarTorneioButton
             // 
@@ -213,8 +214,9 @@ namespace TorneioUI
             this.DeletarSelecionadoTimesJogadoresButton.Name = "DeletarSelecionadoTimesJogadoresButton";
             this.DeletarSelecionadoTimesJogadoresButton.Size = new System.Drawing.Size(146, 75);
             this.DeletarSelecionadoTimesJogadoresButton.TabIndex = 23;
-            this.DeletarSelecionadoTimesJogadoresButton.Text = "Deletar Selecionado";
+            this.DeletarSelecionadoTimesJogadoresButton.Text = "Remover Selecionado";
             this.DeletarSelecionadoTimesJogadoresButton.UseVisualStyleBackColor = true;
+            this.DeletarSelecionadoTimesJogadoresButton.Click += new System.EventHandler(this.DeletarSelecionadoTimesJogadoresButton_Click);
             // 
             // CriarNovoTimeLinkLabel
             // 
@@ -225,6 +227,7 @@ namespace TorneioUI
             this.CriarNovoTimeLinkLabel.TabIndex = 25;
             this.CriarNovoTimeLinkLabel.TabStop = true;
             this.CriarNovoTimeLinkLabel.Text = "Criar Novo Time";
+            this.CriarNovoTimeLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.CriarNovoTimeLinkLabel_LinkClicked);
             // 
             // DeletarPremioButton
             // 
@@ -238,8 +241,9 @@ namespace TorneioUI
             this.DeletarPremioButton.Name = "DeletarPremioButton";
             this.DeletarPremioButton.Size = new System.Drawing.Size(146, 75);
             this.DeletarPremioButton.TabIndex = 26;
-            this.DeletarPremioButton.Text = "Deletar Selecionado";
+            this.DeletarPremioButton.Text = "Remover Selecionado";
             this.DeletarPremioButton.UseVisualStyleBackColor = true;
+            this.DeletarPremioButton.Click += new System.EventHandler(this.DeletarPremioButton_Click);
             // 
             // FormularioCriacaoTorneio
             // 

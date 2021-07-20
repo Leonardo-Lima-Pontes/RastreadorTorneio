@@ -15,12 +15,14 @@ namespace TorneioUI
 
         private List<PessoaModelo> pessoasDisponiveis = ConfiguracaoGlobal.Conexao.SelecionarTodasPessoas();
         private List<PessoaModelo> pessoasSelecionadas = new List<PessoaModelo>();
+        private ITimeSolicitante formularioSolicitante;
 
-        public FormularioCriarTime()
+        public FormularioCriarTime(ITimeSolicitante solicitante)
         {
             InitializeComponent();
-
             preencherListas();
+
+            formularioSolicitante = solicitante;
         }
 
         private void preencherListas()
@@ -120,7 +122,10 @@ namespace TorneioUI
             time.NomeTime = NomeTimeTextBox.Text;
             time.MembrosTime = pessoasSelecionadas;
 
-            time = ConfiguracaoGlobal.Conexao.CriaTime(time);
+            ConfiguracaoGlobal.Conexao.CriaTime(time);
+
+            formularioSolicitante.TimeCompleto(time);
+            this.Close();
 
             // TODO - se nós não fecharmos este formulario apos gravar precisaremos resetalo
         }

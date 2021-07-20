@@ -13,6 +13,8 @@ namespace RastreadorBiblioteca.AcessoDeDados
 
         TimeModelo CriaTime(TimeModelo time);
 
+        List<TimeModelo> SelecionarTodosTimes();
+
         List<PessoaModelo> SelecionarTodasPessoas();
 
         

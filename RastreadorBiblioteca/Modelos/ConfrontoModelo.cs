@@ -12,9 +12,9 @@ namespace RastreadorBiblioteca.Modelos
         public int Id { get; set; }
 
         /// <summary>
-        /// 
+        /// Lista de times (dois times) que irão compor o confronto
         /// </summary>
-        public List<EntradaConfrontoModelo> Entrada { get; set; } = new List<EntradaConfrontoModelo>();
+        public List<EntradaConfrontoModelo> TimeCompetindo { get; set; } = new List<EntradaConfrontoModelo>();
 
         /// <summary>
         /// Qual é o vencedor da rodada

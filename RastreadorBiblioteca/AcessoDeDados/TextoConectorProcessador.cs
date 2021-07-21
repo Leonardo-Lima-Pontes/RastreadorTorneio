@@ -206,7 +206,7 @@ namespace RastreadorBiblioteca.AcessoDeDados.ConectorDeTexto
             File.WriteAllLines(nomeArquivo.CaminhoArquivoCompleto(), linhas);
         }
 
-        public static void SalvarParaTorneioArquivo(this List<TorneioModelo> modelos)
+        public static void SalvarParaTorneioArquivo(this List<TorneioModelo> modelos, string nomeArquivo)
         {
             List<string> linhas = new List<string>();
 
@@ -217,22 +217,43 @@ namespace RastreadorBiblioteca.AcessoDeDados.ConectorDeTexto
                         {torneio.TaxaEntrada}, 
                         {ConveterTimeListaParaString(torneio.TimesIncritos)}, 
                         {ConveterPremioListaParaString(torneio.Premios)}
-                        {""}");
+                        {ConveterRodadasParaString(torneio.Partidas)}");
             }
+
+            File.WriteAllLines(nomeArquivo.CaminhoArquivoCompleto(), linhas);
         }
 
-        private static string ConveterPastidasParaString(List<List<ConfrontoModelo>> partidas)
+        private static string ConveterRodadasParaString(List<List<ConfrontoModelo>> rodadas)
         {
             string saida = "";
 
-            if (partidas.Count == 0)
+            if (rodadas.Count == 0)
             {
                 return "";
             }
 
-            foreach (List<ConfrontoModelo> partida in partidas)
+            foreach (List<ConfrontoModelo> partida in rodadas)
             {
-                saida += $"{ partida.Id}|";
+                saida += $"{ ConveterParaConfrontoString(partida)}|";
+            }
+
+            saida = saida.Substring(0, saida.Length - 1);
+
+            return saida;
+        }
+
+        private static string ConveterParaConfrontoString(List<ConfrontoModelo> confrontos)
+        {
+            string saida = "";
+
+            if (confrontos.Count == 0)
+            {
+                return "";
+            }
+
+            foreach (ConfrontoModelo confronto in confrontos)
+            {
+                saida += $"{ confronto.Id}^";
             }
 
             saida = saida.Substring(0, saida.Length - 1);

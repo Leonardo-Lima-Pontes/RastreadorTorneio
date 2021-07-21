@@ -29,7 +29,7 @@ namespace RastreadorBiblioteca.Modelos
         /// <summary>
         /// Partidas do torneio
         /// </summary>
-        public List<List<ConfrontoModelo>> Partidas { get; set; } = new List<List<ConfrontoModelo>>();
+        public List<List<ConfrontoModelo>> Rodadas { get; set; } = new List<List<ConfrontoModelo>>();
 
     }
 }

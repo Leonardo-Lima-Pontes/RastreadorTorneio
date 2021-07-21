@@ -13,7 +13,7 @@ namespace RastreadorBiblioteca.AcessoDeDados
 
         TimeModelo CriaTime(TimeModelo time);
 
-        TorneioModelo CriaTorneio(TorneioModelo torneio);
+        void CriaTorneio(TorneioModelo torneio);
 
         List<TimeModelo> SelecionarTodosTimes();
 

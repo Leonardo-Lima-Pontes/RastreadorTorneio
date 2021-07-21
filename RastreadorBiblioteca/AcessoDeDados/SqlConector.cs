@@ -109,7 +109,7 @@ namespace RastreadorBiblioteca.AcessoDeDados
         /// </summary>
         /// <param name="torneio">Objeto torneio</param>
         /// <returns>Objeto torneio que foi salvo na base de dados incluindo o identificador unico gerado pelo banco de dados</returns>
-        public TorneioModelo CriaTorneio(TorneioModelo torneio)
+        public void CriaTorneio(TorneioModelo torneio)
         {
             using (IDbConnection conexao = new System.Data.SqlClient.SqlConnection(ConfiguracaoGlobal.ConexaoString(bd)))
             {
@@ -118,8 +118,6 @@ namespace RastreadorBiblioteca.AcessoDeDados
                 SalvaTorneioPremio(conexao, torneio);
 
                 SalvaTorneioEntrada(conexao, torneio);
-
-                return torneio;
             }
         }
 

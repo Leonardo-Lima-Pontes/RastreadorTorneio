@@ -117,6 +117,8 @@ namespace TorneioUI
             torneio.Premios = premiosSelecionados;
             torneio.TimesIncritos = timesSelecionados;
 
+            TorneioLogica.CriarRodadas(torneio);
+
             ConfiguracaoGlobal.Conexao.CriaTorneio(torneio);
         }
     }

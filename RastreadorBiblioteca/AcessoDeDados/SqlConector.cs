@@ -10,7 +10,7 @@ namespace RastreadorBiblioteca.AcessoDeDados
 {
     public class SqlConector : IConexaoDeDados
     {
-      
+
         private const string bd = "Torneio";
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace RastreadorBiblioteca.AcessoDeDados
                 p.Add("@NomeColocacao", premio.ColocacaoNome);
                 p.Add("@PremioValor", premio.PremioValor);
                 p.Add("@PremioPorcentagem", premio.PremioPorcentagem);
-                p.Add("@id", 0,  dbType: DbType.Int32, direction: ParameterDirection.Output);
+                p.Add("@id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
 
                 conexao.Execute("dbo.spPremios_Insercao", p, commandType: CommandType.StoredProcedure);
 
@@ -68,7 +68,7 @@ namespace RastreadorBiblioteca.AcessoDeDados
             using (IDbConnection conexao = new System.Data.SqlClient.SqlConnection(ConfiguracaoGlobal.ConexaoString(bd)))
             {
                 var p = new DynamicParameters();
-                p.Add("@@NomeTime", time.NomeTime);
+                p.Add("@NomeTime", time.NomeTime);
                 p.Add("@id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
 
                 conexao.Execute("dbo.spTimes_Insercao", p, commandType: CommandType.StoredProcedure);
@@ -89,6 +89,59 @@ namespace RastreadorBiblioteca.AcessoDeDados
             }
         }
 
+        public TorneioModelo CriaTorneio(TorneioModelo torneio)
+        {
+            using (IDbConnection conexao = new System.Data.SqlClient.SqlConnection(ConfiguracaoGlobal.ConexaoString(bd)))
+            {
+                SalvaTorneio(conexao, torneio);
+
+                SalvaTorneioPremio(conexao, torneio);
+
+                SalvaTorneioEntrada(conexao, torneio);
+
+                return torneio;
+            }
+        }
+
+        private void SalvaTorneio(IDbConnection conexao, TorneioModelo torneio)
+        {
+            var p = new DynamicParameters();
+            p.Add("@NomeTorneio", torneio.TorneioNome);
+            p.Add("@TaxaEntrada", torneio.TaxaEntrada);
+            p.Add("@id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
+
+            conexao.Execute("dbo.spTorneios_Insercao", p, commandType: CommandType.StoredProcedure);
+
+            torneio.Id = p.Get<int>("@id");
+        }
+
+        private void SalvaTorneioPremio(IDbConnection conexao, TorneioModelo torneio)
+        {
+            foreach (PremioModelo premio in torneio.Premios)
+            {
+                var p = new DynamicParameters();
+                p.Add("@TorneioId", torneio.Id);
+                p.Add("@PremioId", premio.Id);
+                p.Add("@id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
+
+                conexao.Execute("dbo.spTorneioPremios_Insercao", p, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+        private void SalvaTorneioEntrada(IDbConnection conexao, TorneioModelo torneio)
+        {
+            foreach (TimeModelo time in torneio.TimesIncritos)
+            {
+                var p = new DynamicParameters();
+                p.Add("@TorneioId", torneio.Id);
+                p.Add("@TimeId", time.Id);
+                p.Add("@id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
+
+                conexao.Execute("dbo.spTorneioEntradas_Insercao", p, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+
         /// <summary>
         /// Seleciona e retona todos os dados da tebela pessoas do banco de dados
         /// </summary>
@@ -97,7 +150,7 @@ namespace RastreadorBiblioteca.AcessoDeDados
         {
             List<PessoaModelo> saidaPessoa;
 
-            using(IDbConnection conexao = new System.Data.SqlClient.SqlConnection(ConfiguracaoGlobal.ConexaoString(bd)))
+            using (IDbConnection conexao = new System.Data.SqlClient.SqlConnection(ConfiguracaoGlobal.ConexaoString(bd)))
             {
                 saidaPessoa = conexao.Query<PessoaModelo>("dbo.spPessoas_SelecionarTudo").ToList();
             }

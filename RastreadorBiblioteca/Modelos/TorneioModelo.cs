@@ -7,6 +7,10 @@ namespace RastreadorBiblioteca.Modelos
     public class TorneioModelo
     {
         /// <summary>
+        /// Identificador unico do torneio (gerado automaticamente pelo banco de dados)
+        /// </summary>
+        public int Id { get; set; }
+        /// <summary>
         /// Nome do torneio
         /// </summary>
         public string TorneioNome { get; set; }

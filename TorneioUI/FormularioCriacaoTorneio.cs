@@ -98,5 +98,26 @@ namespace TorneioUI
                 CarregarListas();
             }
         }
+
+        private void CriarTorneioButton_Click(object sender, EventArgs e)
+        {
+            TorneioModelo torneio = new TorneioModelo();
+
+            decimal taxaTorneio;
+            bool validaTaxa = decimal.TryParse(this.TaxaTorneioTextBox.Text, out taxaTorneio);
+
+            if (!validaTaxa)
+            {
+                MessageBox.Show("Você precisa informar qual é taxa do torneio", "TAXA", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            torneio.TaxaEntrada = taxaTorneio;
+            torneio.TorneioNome = this.NomeTorneioTextBox.Text;
+            torneio.Premios = premiosSelecionados;
+            torneio.TimesIncritos = timesSelecionados;
+
+            ConfiguracaoGlobal.Conexao.CriaTorneio(torneio);
+        }
     }
 }

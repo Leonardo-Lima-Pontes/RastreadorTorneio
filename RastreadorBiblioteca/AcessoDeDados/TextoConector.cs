@@ -74,6 +74,11 @@ namespace RastreadorBiblioteca.AcessoDeDados
             return modelo;
         }
 
+        public TorneioModelo CriaTorneio(TorneioModelo torneio)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<PessoaModelo> SelecionarTodasPessoas()
         {
             return PessoaArquivo.CaminhoArquivoCompleto().CarregarArquivo().ConverterParaPessoaModelo();

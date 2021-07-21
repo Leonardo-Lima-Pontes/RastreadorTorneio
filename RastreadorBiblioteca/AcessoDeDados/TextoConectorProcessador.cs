@@ -122,6 +122,44 @@ namespace RastreadorBiblioteca.AcessoDeDados.ConectorDeTexto
             return saidaTimeModelo;
         }
 
+        public static List<TorneioModelo> ConverterParaTorneioModelo(this List<string> lines, string timeArquivo, string pessoaArquivo, string premioArquivo)
+        {
+            List<TorneioModelo> saidaTorneio = new List<TorneioModelo>();
+            List<TimeModelo> times = timeArquivo.CaminhoArquivoCompleto().CarregarArquivo().ConverterParaTimeModelo(pessoaArquivo);
+            List<PremioModelo> premios = premioArquivo.CaminhoArquivoCompleto().CarregarArquivo().ConverterParaPremioModelo();
+
+            foreach (string line in lines)
+            {
+                string[] colunas = line.Split(',');
+
+                TorneioModelo torneio = new TorneioModelo();
+
+                torneio.Id = int.Parse(colunas[0]);
+                torneio.TorneioNome = colunas[1];
+                torneio.TaxaEntrada = decimal.Parse(colunas[2]);
+
+                string[] timesIds = colunas[3].Split('|');
+
+                foreach (string id in timesIds)
+                {
+                    torneio.TimesIncritos.Add(times.Where(x => x.Id == int.Parse(id)).First());
+                }
+
+                string[] premiosIds = colunas[4].Split('|');
+
+                foreach (string id in premiosIds)
+                {
+                    torneio.Premios.Add(premios.Where(x => x.Id == int.Parse(id)).First());
+                }
+
+                saidaTorneio.Add(torneio);
+            }
+
+            // TODO - Capturar as informações de rounds
+
+            return saidaTorneio;
+        }
+
         /// <summary>
         /// Salva a lista de premios no caminho especificado
         /// </summary>
@@ -166,6 +204,78 @@ namespace RastreadorBiblioteca.AcessoDeDados.ConectorDeTexto
             }
 
             File.WriteAllLines(nomeArquivo.CaminhoArquivoCompleto(), linhas);
+        }
+
+        public static void SalvarParaTorneioArquivo(this List<TorneioModelo> modelos)
+        {
+            List<string> linhas = new List<string>();
+
+            foreach (TorneioModelo torneio in modelos)
+            {
+                linhas.Add($@"{torneio.Id},
+                        {torneio.TorneioNome},
+                        {torneio.TaxaEntrada}, 
+                        {ConveterTimeListaParaString(torneio.TimesIncritos)}, 
+                        {ConveterPremioListaParaString(torneio.Premios)}
+                        {""}");
+            }
+        }
+
+        private static string ConveterPastidasParaString(List<List<ConfrontoModelo>> partidas)
+        {
+            string saida = "";
+
+            if (partidas.Count == 0)
+            {
+                return "";
+            }
+
+            foreach (List<ConfrontoModelo> partida in partidas)
+            {
+                saida += $"{ partida.Id}|";
+            }
+
+            saida = saida.Substring(0, saida.Length - 1);
+
+            return saida;
+        }
+
+        private static string ConveterPremioListaParaString(List<PremioModelo> premios)
+        {
+            string saida = "";
+
+            if (premios.Count == 0)
+            {
+                return "";
+            }
+
+            foreach (PremioModelo premio in premios)
+            {
+                saida += $"{ premio.Id}|";
+            }
+
+            saida = saida.Substring(0, saida.Length - 1);
+
+            return saida;
+        }
+
+        private static string ConveterTimeListaParaString(List<TimeModelo> times)
+        {
+            string saida = "";
+
+            if (times.Count == 0)
+            {
+                return "";
+            }
+
+            foreach (TimeModelo time in times)
+            {
+                saida += $"{ time.Id} |";
+            }
+
+            saida = saida.Substring(0, saida.Length - 1);
+
+            return saida;
         }
 
         /// <summary>

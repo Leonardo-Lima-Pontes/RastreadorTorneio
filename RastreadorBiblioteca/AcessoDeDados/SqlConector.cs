@@ -63,6 +63,11 @@ namespace RastreadorBiblioteca.AcessoDeDados
             }
         }
 
+        /// <summary>
+        /// Cria o time na base de dados
+        /// </summary>
+        /// <param name="time">Informações do objeto time</param>
+        /// <returns>As informações do time incluindo o identificador unico</returns>
         public TimeModelo CriaTime(TimeModelo time)
         {
             using (IDbConnection conexao = new System.Data.SqlClient.SqlConnection(ConfiguracaoGlobal.ConexaoString(bd)))
@@ -75,20 +80,35 @@ namespace RastreadorBiblioteca.AcessoDeDados
 
                 time.Id = p.Get<int>("@id");
 
-                foreach (PessoaModelo membroTime in time.MembrosTime)
-                {
-                    p = new DynamicParameters();
-                    p.Add("@TimeId", time.Id);
-                    p.Add("@PessoaId", membroTime.Id);
-                    p.Add("@id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
-
-                    conexao.Execute("dbo.spTimeMembros_Insercao", p, commandType: CommandType.StoredProcedure);
-                }
+                SalvaTimeMembros(conexao, time);
 
                 return time;
             }
         }
 
+        /// <summary>
+        /// Cria os membros do time na base de dados
+        /// </summary>
+        /// <param name="conexao">conexao com o banco de dados</param>
+        /// <param name="time">time</param>
+        private void SalvaTimeMembros(IDbConnection conexao, TimeModelo time)
+        {
+            foreach (PessoaModelo membroTime in time.MembrosTime)
+            {
+                var p = new DynamicParameters();
+                p.Add("@TimeId", time.Id);
+                p.Add("@PessoaId", membroTime.Id);
+                p.Add("@id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
+
+                conexao.Execute("dbo.spTimeMembros_Insercao", p, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+        /// <summary>
+        /// Cria o torneio
+        /// </summary>
+        /// <param name="torneio">Objeto torneio</param>
+        /// <returns>Objeto torneio que foi salvo na base de dados incluindo o identificador unico gerado pelo banco de dados</returns>
         public TorneioModelo CriaTorneio(TorneioModelo torneio)
         {
             using (IDbConnection conexao = new System.Data.SqlClient.SqlConnection(ConfiguracaoGlobal.ConexaoString(bd)))
@@ -103,6 +123,11 @@ namespace RastreadorBiblioteca.AcessoDeDados
             }
         }
 
+        /// <summary>
+        /// Salva o Torneio no banco de dados
+        /// </summary>
+        /// <param name="conexao">conexão</param>
+        /// <param name="torneio">objeto torneio</param>
         private void SalvaTorneio(IDbConnection conexao, TorneioModelo torneio)
         {
             var p = new DynamicParameters();
@@ -115,6 +140,12 @@ namespace RastreadorBiblioteca.AcessoDeDados
             torneio.Id = p.Get<int>("@id");
         }
 
+
+        /// <summary>
+        /// Salva o Os premios do torneio na base de dados
+        /// </summary>
+        /// <param name="conexao">conexão</param>
+        /// <param name="torneio">objeto torneio</param>
         private void SalvaTorneioPremio(IDbConnection conexao, TorneioModelo torneio)
         {
             foreach (PremioModelo premio in torneio.Premios)
@@ -128,6 +159,11 @@ namespace RastreadorBiblioteca.AcessoDeDados
             }
         }
 
+        /// <summary>
+        /// Salva os time que que vão jogar o torneio na base de dados
+        /// </summary>
+        /// <param name="conexao">conexão</param>
+        /// <param name="torneio">objeto torneio</param>
         private void SalvaTorneioEntrada(IDbConnection conexao, TorneioModelo torneio)
         {
             foreach (TimeModelo time in torneio.TimesIncritos)

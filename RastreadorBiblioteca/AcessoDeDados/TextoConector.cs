@@ -13,6 +13,7 @@ namespace RastreadorBiblioteca.AcessoDeDados
         private const string PremioArquivo = "PremioModelo.csv";
         private const string PessoaArquivo = "PessoaModelo.csv";
         private const string TimeArquivo = "TimeModelo.csv";
+        private const string TorneioArquivo = "TorneioModelo.csv";
 
         public PessoaModelo CriaPessoa(PessoaModelo modelo)
         {
@@ -74,9 +75,25 @@ namespace RastreadorBiblioteca.AcessoDeDados
             return modelo;
         }
 
-        public TorneioModelo CriaTorneio(TorneioModelo torneio)
+        public void CriaTorneio(TorneioModelo modelo)
         {
-            throw new NotImplementedException();
+            List<TorneioModelo> torneios = TorneioArquivo
+                .CaminhoArquivoCompleto()
+                .CarregarArquivo()
+                .ConverterParaTorneioModelo(TimeArquivo, PessoaArquivo, PremioArquivo);
+
+            int idAtual = 1;
+
+            if (torneios.Count > 0)
+            {
+                idAtual = torneios.OrderByDescending(x => x.Id).First().Id + 1;
+            }
+
+            modelo.Id = idAtual;
+
+            torneios.Add(modelo);
+
+            torneios.SalvarParaTorneioArquivo(TorneioArquivo);
         }
 
         public List<PessoaModelo> SelecionarTodasPessoas()

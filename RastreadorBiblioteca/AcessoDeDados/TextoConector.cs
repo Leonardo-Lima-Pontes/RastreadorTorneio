@@ -14,6 +14,8 @@ namespace RastreadorBiblioteca.AcessoDeDados
         private const string PessoaArquivo = "PessoaModelo.csv";
         private const string TimeArquivo = "TimeModelo.csv";
         private const string TorneioArquivo = "TorneioModelo.csv";
+        private const string ConfrontoArquivo = "ConfrontoModelo.csv";
+        private const string TimeConfrontoArquivo = "TimeConfrontoModelo.csv";
 
         public PessoaModelo CriaPessoa(PessoaModelo modelo)
         {

@@ -14,7 +14,7 @@ namespace RastreadorBiblioteca.Modelos
         /// <summary>
         /// Lista de times (dois times) que irão compor o confronto
         /// </summary>
-        public List<EntradaConfrontoModelo> TimeCompetindo { get; set; } = new List<EntradaConfrontoModelo>();
+        public List<TimeConfrontoModelo> TimeCompetindo { get; set; } = new List<TimeConfrontoModelo>();
 
         /// <summary>
         /// Qual é o vencedor da rodada

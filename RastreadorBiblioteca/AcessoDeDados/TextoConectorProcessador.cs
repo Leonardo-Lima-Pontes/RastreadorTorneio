@@ -217,7 +217,7 @@ namespace RastreadorBiblioteca.AcessoDeDados.ConectorDeTexto
                         {torneio.TaxaEntrada}, 
                         {ConveterTimeListaParaString(torneio.TimesIncritos)}, 
                         {ConveterPremioListaParaString(torneio.Premios)}
-                        {ConveterRodadasParaString(torneio.Partidas)}");
+                        {ConveterRodadasParaString(torneio.Rodadas)}");
             }
 
             File.WriteAllLines(nomeArquivo.CaminhoArquivoCompleto(), linhas);

@@ -4,8 +4,13 @@ using System.Text;
 
 namespace RastreadorBiblioteca.Modelos
 {
-    public class EntradaConfrontoModelo
+    public class TimeConfrontoModelo
     {
+        /// <summary>
+        /// Identificador unico para a entrada de confronto (gerado automaticamente pelo banco de dados)
+        /// </summary>
+        public int Id { get; set; }
+
         /// <summary>
         /// Representa um time no confronto
         /// </summary>

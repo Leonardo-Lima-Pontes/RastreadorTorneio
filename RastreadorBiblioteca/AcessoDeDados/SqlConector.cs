@@ -118,6 +118,60 @@ namespace RastreadorBiblioteca.AcessoDeDados
                 SalvaTorneioPremio(conexao, torneio);
 
                 SalvaTorneioEntrada(conexao, torneio);
+
+                SalvarTorneioPartidas(conexao, torneio);
+            }
+        }
+
+        /// <summary>
+        /// Todas todas rodadas do torneio e também quais são os confrontos que irão acontecer
+        /// </summary>
+        /// <param name="conexao">Conexão com o banco de dados</param>
+        /// <param name="torneio">Objeto Torneio</param>
+        private void SalvarTorneioPartidas(IDbConnection conexao, TorneioModelo torneio)
+        {
+            foreach (List<ConfrontoModelo> confrontoModelos in torneio.Rodadas)
+            {
+                foreach (ConfrontoModelo confronto in confrontoModelos)
+                {
+                    var p = new DynamicParameters();
+                    p.Add("@TorneioId", torneio.Id);
+                    p.Add("@ConfrontoRodada", confronto.RodadaConfronto);
+                    p.Add("@id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
+
+                    conexao.Execute("dbo.spConfrontos_Insercao", p, commandType: CommandType.StoredProcedure);
+
+                    confronto.Id = p.Get<int>("@id");
+
+                    foreach (TimeConfrontoModelo entradaConfronto in confronto.TimeCompetindo)
+                    {
+                        p = new DynamicParameters();
+                        p.Add("@ConfrontoId", confronto.Id);
+
+                        if (entradaConfronto.ConfrontoPai == null)
+                        {
+                            p.Add("@ConfrontoPaiId", null);
+                        }
+                        else
+                        {
+                            p.Add("@ConfrontoPaiId", entradaConfronto.ConfrontoPai.Id);
+                        }
+
+                        if (entradaConfronto.TimeCompetindo == null)
+                        {
+                            p.Add("@TimeCompetindoId", null);
+                        }
+                        else
+                        {
+                            p.Add("@TimeCompetindoId", entradaConfronto.TimeCompetindo.Id);
+                        }
+
+                        
+                        p.Add("@id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
+
+                        conexao.Execute("dbo.spConfrontoEntradas_Insercao", p, commandType: CommandType.StoredProcedure);
+                    }
+                }
             }
         }
 

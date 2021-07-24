@@ -88,6 +88,7 @@ namespace TorneioUI
             this.CriarTorneioButton.TabIndex = 36;
             this.CriarTorneioButton.Text = "Criar Torneio";
             this.CriarTorneioButton.UseVisualStyleBackColor = true;
+            this.CriarTorneioButton.Click += new System.EventHandler(this.CriarTorneioButton_Click);
             // 
             // CarregarTorneioComboBox
             // 

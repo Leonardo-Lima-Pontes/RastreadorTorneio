@@ -122,11 +122,15 @@ namespace RastreadorBiblioteca.AcessoDeDados.ConectorDeTexto
             return saidaTimeModelo;
         }
 
-        public static List<TorneioModelo> ConverterParaTorneioModelo(this List<string> lines, string timeArquivo, string pessoaArquivo, string premioArquivo)
+        public static List<TorneioModelo> ConverterParaTorneioModelo(this List<string> lines,
+            string timeArquivo,
+            string pessoaArquivo,
+            string premioArquivo)
         {
             List<TorneioModelo> saidaTorneio = new List<TorneioModelo>();
             List<TimeModelo> times = timeArquivo.CaminhoArquivoCompleto().CarregarArquivo().ConverterParaTimeModelo(pessoaArquivo);
             List<PremioModelo> premios = premioArquivo.CaminhoArquivoCompleto().CarregarArquivo().ConverterParaPremioModelo();
+            List<ConfrontoModelo> confrontos = ConfiguracaoGlobal.ConfrontoArquivo.CaminhoArquivoCompleto().CarregarArquivo().ConverterParaConfrontoModelo();
 
             foreach (string line in lines)
             {
@@ -152,12 +156,27 @@ namespace RastreadorBiblioteca.AcessoDeDados.ConectorDeTexto
                     torneio.Premios.Add(premios.Where(x => x.Id == int.Parse(id)).First());
                 }
 
+                //Capturar as informações de rounds 
+                string[] rodadas = colunas[5].Split('|');
+
+                foreach (string rodada in rodadas)
+                {
+                    string[] confronto = rodada.Split('^');
+                    List<ConfrontoModelo> cs = new List<ConfrontoModelo>();
+
+                    foreach (string confrontoModeloId in confronto)
+                    {
+                        confrontos.Add(confrontos.Where(x => x.Id == int.Parse(confrontoModeloId)).First());
+                    }
+                    torneio.Rodadas.Add(cs);
+                }
+
                 saidaTorneio.Add(torneio);
+
             }
 
-            // TODO - Capturar as informações de rounds
-
             return saidaTorneio;
+
         }
 
         /// <summary>
@@ -280,6 +299,25 @@ namespace RastreadorBiblioteca.AcessoDeDados.ConectorDeTexto
             return saida;
         }
 
+        private static string ConveterTimeConfrontoListaParaString(List<TimeConfrontoModelo> timeConfrontos)
+        {
+            string saida = "";
+
+            if (timeConfrontos.Count == 0)
+            {
+                return "";
+            }
+
+            foreach (TimeConfrontoModelo confronto in timeConfrontos)
+            {
+                saida += $"{ confronto.Id}|";
+            }
+
+            saida = saida.Substring(0, saida.Length - 1);
+
+            return saida;
+        }
+
         private static string ConveterTimeListaParaString(List<TimeModelo> times)
         {
             string saida = "";
@@ -297,6 +335,155 @@ namespace RastreadorBiblioteca.AcessoDeDados.ConectorDeTexto
             saida = saida.Substring(0, saida.Length - 1);
 
             return saida;
+        }
+
+        public static void SalvarRodadasParaArquivo(this TorneioModelo modelo, string confrontoArquivo, string timeConfrontoArquivo)
+        {
+            foreach (List<ConfrontoModelo> rodada in modelo.Rodadas)
+            {
+                foreach (ConfrontoModelo confronto in rodada)
+                {
+                    confronto.SalvarConfrontoParaArquivo(confrontoArquivo, timeConfrontoArquivo);
+                }
+            }
+        }
+
+        private static List<TimeConfrontoModelo> ConveterStringParaConfrontoModelo(string entrada)
+        {
+            string[] ids = entrada.Split('|');
+            List<TimeConfrontoModelo> saidaTimeConfronto = new List<TimeConfrontoModelo>();
+            List<TimeConfrontoModelo> timesConfronto = ConfiguracaoGlobal.TimeConfrontoArquivo.CaminhoArquivoCompleto().CarregarArquivo().ConveterParaTimeConfrontoModelo();
+
+            foreach (string id in ids)
+            {
+                saidaTimeConfronto.Add(timesConfronto.Where(x => x.Id == int.Parse(id)).First());
+            }
+
+            return saidaTimeConfronto;
+        }
+
+        private static List<TimeConfrontoModelo> ConveterParaTimeConfrontoModelo(this List<string> linhas)
+        {
+            List<TimeConfrontoModelo> timeConfrontoSaida = new List<TimeConfrontoModelo>();
+
+            foreach (string linha in linhas)
+            {
+                string[] colunas = linha.Split(',');
+
+                TimeConfrontoModelo timeConfronto = new TimeConfrontoModelo();
+                timeConfronto.Id = int.Parse(colunas[0]);
+                timeConfronto.TimeCompetindo = PegarIdDoTime(int.Parse(colunas[1]));
+                timeConfronto.Pontuacao = double.Parse(colunas[2]);
+
+                int paiId = 0;
+                if (int.TryParse(colunas[3], out paiId))
+                {
+                    timeConfronto.ConfrontoPai = PegarIdDoConfronto(paiId);
+                }
+                else
+                {
+                    timeConfronto.ConfrontoPai = null;
+                }
+
+                timeConfrontoSaida.Add(timeConfronto);
+            }
+
+            return timeConfrontoSaida;
+        }
+
+        private static TimeModelo PegarIdDoTime(int id)
+        {
+            List<TimeModelo> times = ConfiguracaoGlobal.TimeArquivo.CaminhoArquivoCompleto().CarregarArquivo().ConverterParaTimeModelo(ConfiguracaoGlobal.PessoaArquivo);
+            return times.Where(x => x.Id == id).First();
+        }
+
+        private static ConfrontoModelo PegarIdDoConfronto(int id)
+        {
+            List<ConfrontoModelo> confronto = ConfiguracaoGlobal.ConfrontoArquivo.CaminhoArquivoCompleto().CarregarArquivo().ConverterParaConfrontoModelo();
+            return confronto.Where(x => x.Id == id).First();
+        }
+
+        public static List<ConfrontoModelo> ConverterParaConfrontoModelo(this List<string> linhas)
+        {
+            List<ConfrontoModelo> confrontoSaida = new List<ConfrontoModelo>();
+
+            foreach (var linha in linhas)
+            {
+                string[] colunas = linha.Split(',');
+
+                ConfrontoModelo confronto = new ConfrontoModelo();
+
+                confronto.Id = int.Parse(colunas[0]);
+                confronto.TimeCompetindo = ConveterStringParaConfrontoModelo(colunas[1]);
+                confronto.Vencedor = PegarIdDoTime(int.Parse(colunas[2]));
+                confronto.RodadaConfronto = int.Parse(colunas[3]);
+
+                confrontoSaida.Add(confronto);
+            }
+
+            return confrontoSaida;
+        }
+
+        public static void SalvarConfrontoParaArquivo(this ConfrontoModelo confronto, string confrontoArquivo, string timeConfrontoArquivo)
+        {
+            List<ConfrontoModelo> confrontos = ConfiguracaoGlobal.ConfrontoArquivo.CaminhoArquivoCompleto().CarregarArquivo().ConverterParaConfrontoModelo();
+
+            int idAtual = 1;
+
+            if (confrontos.Count > 0)
+            {
+                idAtual = confrontos.OrderByDescending(x => x.Id).First().Id + 1;
+            }
+
+            confronto.Id = idAtual;
+
+            foreach (TimeConfrontoModelo timeConfronto in confronto.TimeCompetindo)
+            {
+                timeConfronto.SalvarTimeConfrontoParaArquivo(timeConfrontoArquivo);
+            }
+
+            List<string> linhas = new List<string>();
+
+            foreach (ConfrontoModelo c in confrontos)
+            {
+                string vencedor = "";
+                if (c.Vencedor != null)
+                {
+                    vencedor = c.Vencedor.Id.ToString();
+                    linhas.Add($"{c.Id}, {ConveterTimeConfrontoListaParaString(c.TimeCompetindo)}, {vencedor}, {c.RodadaConfronto}");
+                }
+            }
+
+            File.WriteAllLines(ConfiguracaoGlobal.ConfrontoArquivo.CaminhoArquivoCompleto(), linhas);
+
+        }
+
+        public static void SalvarTimeConfrontoParaArquivo(this TimeConfrontoModelo timeConfronto, string timeConfrontoArquivo)
+        {
+            List<TimeConfrontoModelo> timeConfrontos = ConfiguracaoGlobal.TimeConfrontoArquivo.CaminhoArquivoCompleto().CarregarArquivo().ConveterParaTimeConfrontoModelo();
+
+            int idAtual = 1;
+
+            if (timeConfrontos.Count > 0)
+            {
+                idAtual = timeConfrontos.OrderByDescending(x => x.Id).First().Id + 1;
+            }
+
+            timeConfronto.Id = idAtual;
+
+            List<string> linhas = new List<string>();
+
+            foreach (TimeConfrontoModelo time in timeConfrontos)
+            {
+                string pai = "";
+                if (time.ConfrontoPai != null)
+                {
+                    pai = time.ConfrontoPai.Id.ToString();
+                }
+                linhas.Add($"{time.Id }, {time.TimeCompetindo}, {time.Pontuacao}, {pai}");
+            }
+
+            File.WriteAllLines(ConfiguracaoGlobal.TimeConfrontoArquivo.CaminhoArquivoCompleto(), linhas);
         }
 
         /// <summary>

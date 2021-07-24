@@ -19,6 +19,6 @@ namespace RastreadorBiblioteca.AcessoDeDados
 
         List<PessoaModelo> SelecionarTodasPessoas();
 
-        
+        List<TorneioModelo> SelecionarTodosTorneios();
     }
 }

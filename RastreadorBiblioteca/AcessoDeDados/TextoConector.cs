@@ -93,10 +93,13 @@ namespace RastreadorBiblioteca.AcessoDeDados
 
             modelo.Id = idAtual;
 
+            modelo.SalvarRodadasParaArquivo(ConfrontoArquivo, TimeConfrontoArquivo);
+
             torneios.Add(modelo);
 
             torneios.SalvarParaTorneioArquivo(TorneioArquivo);
         }
+
 
         public List<PessoaModelo> SelecionarTodasPessoas()
         {
@@ -106,6 +109,11 @@ namespace RastreadorBiblioteca.AcessoDeDados
         public List<TimeModelo> SelecionarTodosTimes()
         {
             return TimeArquivo.CaminhoArquivoCompleto().CarregarArquivo().ConverterParaTimeModelo(PessoaArquivo);
+        }
+
+        public List<TorneioModelo> SelecionarTodosTorneios()
+        {
+            throw new NotImplementedException();
         }
     }
 }

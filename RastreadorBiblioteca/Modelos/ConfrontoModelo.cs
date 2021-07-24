@@ -12,6 +12,11 @@ namespace RastreadorBiblioteca.Modelos
         public int Id { get; set; }
 
         /// <summary>
+        /// O id do banco de dados que vai ser usado apra identificar o vencedor
+        /// </summary>
+        public int VendedorId { get; set; }
+
+        /// <summary>
         /// Lista de times (dois times) que irão compor o confronto
         /// </summary>
         public List<TimeConfrontoModelo> TimeCompetindo { get; set; } = new List<TimeConfrontoModelo>();

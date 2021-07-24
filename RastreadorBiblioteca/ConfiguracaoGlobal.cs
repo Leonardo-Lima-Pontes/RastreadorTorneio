@@ -6,8 +6,15 @@ using System.Text;
 
 namespace RastreadorBiblioteca
 {
-    public class ConfiguracaoGlobal
+    public static class ConfiguracaoGlobal
     {
+        public const string PremioArquivo = "PremioModelo.csv";
+        public const string PessoaArquivo = "PessoaModelo.csv";
+        public const string TimeArquivo = "TimeModelo.csv";
+        public const string TorneioArquivo = "TorneioModelo.csv";
+        public const string ConfrontoArquivo = "ConfrontoModelo.csv";
+        public const string TimeConfrontoArquivo = "TimeConfrontoModelo.csv";
+
         public static IConexaoDeDados Conexao { get; private set; }
 
         public static void IniciarConexoes(TipoBaseDeDados bd)

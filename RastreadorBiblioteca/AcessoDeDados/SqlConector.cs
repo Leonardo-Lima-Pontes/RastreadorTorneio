@@ -265,5 +265,90 @@ namespace RastreadorBiblioteca.AcessoDeDados
 
             return saidaTimes;
         }
+
+        public List<TorneioModelo> SelecionarTodosTorneios()
+        {
+            List<TorneioModelo> saidaTorneio;
+
+            using (IDbConnection conexao = new System.Data.SqlClient.SqlConnection(ConfiguracaoGlobal.ConexaoString(bd)))
+            {
+                saidaTorneio = conexao.Query<TorneioModelo>("dbo.spTorneios_SelecionarTudo").ToList();
+                var p = new DynamicParameters();
+
+                foreach (TorneioModelo torneio in saidaTorneio)
+                {
+
+                    p = new DynamicParameters();
+                    p.Add("@TorneioId", torneio.Id);
+
+                    torneio.Premios = conexao.Query<PremioModelo>("dbo.Premios_SelecionarPeloTorneio", p, commandType: CommandType.StoredProcedure).ToList();
+
+                    p = new DynamicParameters();
+                    p.Add("@TorneioId", torneio.Id);
+
+                    torneio.TimesIncritos = conexao.Query<TimeModelo>("dbo.Times_SelecionarPeloTorneio", p, commandType: CommandType.StoredProcedure).ToList();
+
+                    foreach (TimeModelo time in torneio.TimesIncritos)
+                    {
+                        p = new DynamicParameters();
+                        p.Add("@TimeId", time.Id);
+
+                        time.MembrosTime = conexao.Query<PessoaModelo>("dbo.spTimeMembros_SelecionarPeloTime", p, commandType: CommandType.StoredProcedure).ToList();
+                    }
+
+                    p = new DynamicParameters();
+                    p.Add("@TorneioId", torneio.Id);
+
+                    List<ConfrontoModelo> confrontos = conexao.Query<ConfrontoModelo>("dbo.spConfrontos_PegarPeloTorneio", p, commandType: CommandType.StoredProcedure).ToList();
+
+                    foreach (ConfrontoModelo confronto in confrontos)
+                    {
+                        p = new DynamicParameters();
+                        p.Add("@ConfrontoId", confronto.Id);
+
+                        confronto.TimeCompetindo = conexao.Query<TimeConfrontoModelo>("dbo.spConfrontoEntradas_PegarPeloConfronto", p, commandType: CommandType.StoredProcedure).ToList();
+
+                        List<TimeModelo> todosTimes = SelecionarTodosTimes();
+
+                        if (confronto.VendedorId > 0)
+                        {
+                            confronto.Vencedor = todosTimes.Where(x => x.Id == confronto.VendedorId).First();
+                        }
+
+                        foreach (var time in confronto.TimeCompetindo)
+                        {
+                            if (time.IdTimeCompetindo > 0)
+                            {
+                                time.TimeCompetindo = todosTimes.Where(x => x.Id == time.IdTimeCompetindo).First();
+                            }
+
+                            if (time.idConfrontoPai > 0)
+                            {
+                                time.ConfrontoPai = confrontos.Where(x => x.Id == time.idConfrontoPai).First();
+                            }
+                        }
+                    }
+
+                    List<ConfrontoModelo> linhaAtual = new List<ConfrontoModelo>();
+                    int rodadaAtual = 1;
+
+                    foreach (ConfrontoModelo confronto in confrontos)
+                    {
+                        if (confronto.RodadaConfronto > rodadaAtual)
+                        {
+                            torneio.Rodadas.Add(linhaAtual);
+                            linhaAtual = new List<ConfrontoModelo>();
+                            rodadaAtual += 1;
+                        }
+
+                        linhaAtual.Add(confronto);
+                    }
+
+                    torneio.Rodadas.Add(linhaAtual);
+                }
+            }
+
+            return saidaTorneio;
+        }
     }
 }

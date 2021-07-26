@@ -17,6 +17,11 @@ namespace RastreadorBiblioteca.AcessoDeDados
         private const string ConfrontoArquivo = "ConfrontoModelo.csv";
         private const string TimeConfrontoArquivo = "TimeConfrontoModelo.csv";
 
+        public void AtualizarConfront(ConfrontoModelo confronto)
+        {
+            throw new NotImplementedException();
+        }
+
         public PessoaModelo CriaPessoa(PessoaModelo modelo)
         {
             List<PessoaModelo> pessoas = PessoaArquivo.CaminhoArquivoCompleto().CarregarArquivo().ConverterParaPessoaModelo();

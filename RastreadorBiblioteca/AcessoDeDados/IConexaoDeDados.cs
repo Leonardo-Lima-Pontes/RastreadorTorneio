@@ -15,6 +15,8 @@ namespace RastreadorBiblioteca.AcessoDeDados
 
         void CriaTorneio(TorneioModelo torneio);
 
+        void AtualizarConfront(ConfrontoModelo confronto);
+
         List<TimeModelo> SelecionarTodosTimes();
 
         List<PessoaModelo> SelecionarTodasPessoas();

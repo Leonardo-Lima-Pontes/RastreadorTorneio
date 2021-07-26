@@ -1,4 +1,5 @@
-﻿using RastreadorBiblioteca.Modelos;
+﻿using RastreadorBiblioteca;
+using RastreadorBiblioteca.Modelos;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -79,12 +80,34 @@ namespace TorneioUI
                     confrontosSelecionados.Clear();
                     foreach (ConfrontoModelo confronto in confrontos)
                     {
-                        confrontosSelecionados.Add(confronto);
+                        if (confronto.Vencedor == null || !NaoJogadoCheckBox.Checked)
+                        {
+                            confrontosSelecionados.Add(confronto);
+                        }
                     }
                 }
             }
 
-            CarregarInformacoesConfronto(confrontosSelecionados.First());
+            if (confrontosSelecionados.Count > 0)
+            {
+                CarregarInformacoesConfronto(confrontosSelecionados.First()); 
+            }
+
+            MostrarConfrontoInfo();
+        }
+
+        private void MostrarConfrontoInfo()
+        {
+            bool estaVisivel = (confrontosSelecionados.Count > 0);
+
+            TimeUmLabel.Visible = estaVisivel;
+            PontuacaoTimeUmLabel.Visible = estaVisivel;
+            PontuacaoTimeUmTextBox.Visible = estaVisivel;
+            TimeDoisLabel.Visible = estaVisivel;
+            PontuacaoTimeDoisLabel.Visible = estaVisivel;
+            PontuacaoTimeDoisTextBox.Visible = estaVisivel;
+            ContraLabel.Visible = estaVisivel;
+            PontuacaoButton.Visible = estaVisivel;
         }
 
         private void RodadaListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -99,7 +122,7 @@ namespace TorneioUI
                 return;
             }
 
-            for (int i = 0; i < confronto.TimeCompetindo.Count ; i++)
+            for (int i = 0; i < confronto.TimeCompetindo.Count; i++)
             {
                 if (i == 0)
                 {
@@ -149,6 +172,71 @@ namespace TorneioUI
                 }
 
             }
+        }
+
+        private void NaoJogadoCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            CarregarConfrontos((int)RodadaDropdown.SelectedItem);
+        }
+
+        private void PontuacaoButton_Click(object sender, EventArgs e)
+        {
+            ConfrontoModelo confronto = (ConfrontoModelo)RodadaListBox.SelectedItem;
+            double pontuacaoTimeUm = 0;
+            double pontuacaoTimeDois = 0;
+
+            for (int i = 0; i < confronto.TimeCompetindo.Count; i++)
+            {
+                if (i == 0)
+                {
+                    if (confronto.TimeCompetindo[0] != null)
+                    {
+                        bool validarPontuacao = double.TryParse(PontuacaoTimeUmTextBox.Text, out pontuacaoTimeUm);
+
+                        if (validarPontuacao)
+                        {
+                            confronto.TimeCompetindo[0].Pontuacao = pontuacaoTimeUm;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Por favor informe um valor valido para a pontuação do time 1");
+                        }
+                    }
+                }
+                if (i == 1)
+                {
+                    if (confronto.TimeCompetindo[1] != null)
+                    {
+                        bool validarPontuacao = double.TryParse(PontuacaoTimeDoisTextBox.Text, out pontuacaoTimeDois);
+
+                        if (validarPontuacao)
+                        {
+                            confronto.TimeCompetindo[1].Pontuacao = pontuacaoTimeDois;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Por favor informe um valor valido para a pontuação do time 2");
+                        }
+                    }
+                }
+            }
+
+            if (pontuacaoTimeUm > pontuacaoTimeDois)
+            {
+                confronto.Vencedor = confronto.TimeCompetindo[0].TimeCompetindo;
+            }
+            else if (pontuacaoTimeDois > pontuacaoTimeUm)
+            {
+                confronto.Vencedor = confronto.TimeCompetindo[1].TimeCompetindo;
+            }
+            else
+            {
+                MessageBox.Show("Eu não posso lidar com jogos empatados");
+            }
+
+           CarregarConfrontos((int)RodadaDropdown.SelectedItem);
+
+            ConfiguracaoGlobal.Conexao.AtualizarConfront(confronto);
         }
     }
 }

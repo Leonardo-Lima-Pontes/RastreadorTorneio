@@ -101,6 +101,7 @@ namespace TorneioUI
             this.NaoJogadoCheckBox.TabIndex = 4;
             this.NaoJogadoCheckBox.Text = "Não Jogados";
             this.NaoJogadoCheckBox.UseVisualStyleBackColor = true;
+            this.NaoJogadoCheckBox.CheckedChanged += new System.EventHandler(this.NaoJogadoCheckBox_CheckedChanged);
             // 
             // RodadaListBox
             // 
@@ -196,6 +197,7 @@ namespace TorneioUI
             this.PontuacaoButton.TabIndex = 14;
             this.PontuacaoButton.Text = "Pontuação";
             this.PontuacaoButton.UseVisualStyleBackColor = true;
+            this.PontuacaoButton.Click += new System.EventHandler(this.PontuacaoButton_Click);
             // 
             // FumularioVisualizadorTorneio
             // 

@@ -166,7 +166,7 @@ namespace RastreadorBiblioteca.AcessoDeDados
                             p.Add("@TimeCompetindoId", entradaConfronto.TimeCompetindo.Id);
                         }
 
-                        
+
                         p.Add("@id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
 
                         conexao.Execute("dbo.spConfrontoEntradas_Insercao", p, commandType: CommandType.StoredProcedure);
@@ -349,6 +349,28 @@ namespace RastreadorBiblioteca.AcessoDeDados
             }
 
             return saidaTorneio;
+        }
+
+        public void AtualizarConfront(ConfrontoModelo confronto)
+        {
+            using (IDbConnection conexao = new System.Data.SqlClient.SqlConnection(ConfiguracaoGlobal.ConexaoString(bd)))
+            {
+                var p = new DynamicParameters();
+                p.Add("@id", confronto.Id);
+                p.Add("@VencedorId", confronto.Vencedor.Id);
+
+                conexao.Execute("dbo.spConfrontos_Atualizar", p, commandType: CommandType.StoredProcedure);
+
+                foreach (TimeConfrontoModelo timeConfronto in confronto.TimeCompetindo)
+                {
+                    p = new DynamicParameters();
+                    p.Add("@id", timeConfronto.Id);
+                    p.Add("@TimeCompetindoId", timeConfronto.TimeCompetindo.Id);
+                    p.Add("@Pontuacao", timeConfronto.Pontuacao);
+
+                    conexao.Execute("dbo.spConfrontoEntrada_Atualizar", p, commandType: CommandType.StoredProcedure);
+                }
+            }
         }
     }
 }

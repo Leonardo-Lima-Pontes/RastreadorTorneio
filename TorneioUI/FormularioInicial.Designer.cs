@@ -51,6 +51,7 @@ namespace TorneioUI
             this.CarregarTorneioButton.TabIndex = 35;
             this.CarregarTorneioButton.Text = "Carregar Torneio";
             this.CarregarTorneioButton.UseVisualStyleBackColor = true;
+            this.CarregarTorneioButton.Click += new System.EventHandler(this.CarregarTorneioButton_Click);
             // 
             // CarregarTorneioLabel
             // 

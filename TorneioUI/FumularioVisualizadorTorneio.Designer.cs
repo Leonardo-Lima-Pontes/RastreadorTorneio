@@ -101,7 +101,6 @@ namespace TorneioUI
             this.NaoJogadoCheckBox.TabIndex = 4;
             this.NaoJogadoCheckBox.Text = "Não Jogados";
             this.NaoJogadoCheckBox.UseVisualStyleBackColor = true;
-            this.NaoJogadoCheckBox.CheckedChanged += new System.EventHandler(this.NaoJogadoCheckBox_CheckedChanged);
             // 
             // RodadaListBox
             // 
@@ -112,6 +111,7 @@ namespace TorneioUI
             this.RodadaListBox.Name = "RodadaListBox";
             this.RodadaListBox.Size = new System.Drawing.Size(301, 242);
             this.RodadaListBox.TabIndex = 5;
+            this.RodadaListBox.SelectedIndexChanged += new System.EventHandler(this.RodadaListBox_SelectedIndexChanged);
             // 
             // TimeUmLabel
             // 

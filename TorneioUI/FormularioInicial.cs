@@ -31,5 +31,12 @@ namespace TorneioUI
             FormularioCriacaoTorneio formularioCriarTorneio = new FormularioCriacaoTorneio();
             formularioCriarTorneio.Show();
         }
+
+        private void CarregarTorneioButton_Click(object sender, EventArgs e)
+        {
+            TorneioModelo torneio = (TorneioModelo)CarregarTorneioComboBox.SelectedItem;
+            FumularioVisualizadorTorneio formularioVisualizadorTorneio = new FumularioVisualizadorTorneio(torneio);
+            formularioVisualizadorTorneio.Show();
+        }
     }
 }

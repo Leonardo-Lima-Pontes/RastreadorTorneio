@@ -30,5 +30,39 @@ namespace RastreadorBiblioteca.Modelos
         /// Numero da rodada do confronto
         /// </summary>
         public int RodadaConfronto { get; set; }
+
+        /// <summary>
+        /// Realiza a juntas dos nomes dos times que estão competindo neste
+        /// confronto com VS (time a VS time b)
+        /// </summary>
+        public string NomeTimesConfronto
+        {
+            get
+            {
+                string saida = "";
+
+                foreach (TimeConfrontoModelo timeConfronto in TimeCompetindo)
+                {
+                    if (timeConfronto.TimeCompetindo != null)
+                    {
+                        if (saida.Length == 0)
+                        {
+                            saida = timeConfronto.TimeCompetindo.NomeTime;
+                        }
+                        else
+                        {
+                            saida += $" VS {timeConfronto.TimeCompetindo.NomeTime}";
+                        }
+                    }
+                    else
+                    {
+                        saida = "Partida ainda não aconteceu";
+                        break;
+                    }
+                }
+
+                return saida;
+            }
+        }
     }
 }

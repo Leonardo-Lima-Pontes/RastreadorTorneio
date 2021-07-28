@@ -153,7 +153,7 @@ namespace TorneioUI
                 {
                     if (confronto.TimeCompetindo[1] != null)
                     {
-                        if (confronto.TimeCompetindo[0].TimeCompetindo != null)
+                        if (confronto.TimeCompetindo[1].TimeCompetindo != null)
                         {
                             TimeDoisLabel.Text = confronto.TimeCompetindo[1].TimeCompetindo.NomeTime;
                             PontuacaoTimeDoisTextBox.Text = confronto.TimeCompetindo[1].Pontuacao.ToString();
@@ -179,8 +179,41 @@ namespace TorneioUI
             CarregarConfrontos((int)RodadaDropdown.SelectedItem);
         }
 
+        private string ValidarFormulario()
+        {
+            string erroValidacao = "";
+
+            double pontuacaoTimeUm = 0;
+            double pontuacaoTimeDois = 0;
+
+            bool validaPontuacaoTimeUm = double.TryParse(this.PontuacaoTimeUmTextBox.Text, out pontuacaoTimeUm);
+            bool validaPontuacaoTimeDois = double.TryParse(this.PontuacaoTimeUmTextBox.Text, out pontuacaoTimeDois);
+
+            if (!validaPontuacaoTimeUm || !validaPontuacaoTimeDois)
+            {
+                erroValidacao = "Apenas digite valores numero para informar a pontuação dos times!";
+            }
+            else if (pontuacaoTimeUm == 0  && pontuacaoTimeDois == 0)
+            {
+                erroValidacao = "0 x 0 não é permitido no torneio";
+            }
+            else if (pontuacaoTimeDois == pontuacaoTimeUm)
+            {
+                erroValidacao = "Empates não são permitidos neste torneio !";
+            }
+
+            return erroValidacao;
+        }
+
         private void PontuacaoButton_Click(object sender, EventArgs e)
         {
+            string formularioValidado = ValidarFormulario();
+            if (formularioValidado.Length > 0)
+            {
+                MessageBox.Show(formularioValidado);
+                return;
+            }
+
             ConfrontoModelo confronto = (ConfrontoModelo)RodadaListBox.SelectedItem;
             double pontuacaoTimeUm = 0;
             double pontuacaoTimeDois = 0;
@@ -221,22 +254,17 @@ namespace TorneioUI
                 }
             }
 
-            if (pontuacaoTimeUm > pontuacaoTimeDois)
+
+            try
             {
-                confronto.Vencedor = confronto.TimeCompetindo[0].TimeCompetindo;
+                TorneioLogica.AtualizarReusultadosTorneio(torneio);
             }
-            else if (pontuacaoTimeDois > pontuacaoTimeUm)
+            catch (Exception ex)
             {
-                confronto.Vencedor = confronto.TimeCompetindo[1].TimeCompetindo;
-            }
-            else
-            {
-                MessageBox.Show("Eu não posso lidar com jogos empatados");
+                MessageBox.Show("O seguinte erro ocorreu:", ex.Message);
             }
 
            CarregarConfrontos((int)RodadaDropdown.SelectedItem);
-
-            ConfiguracaoGlobal.Conexao.AtualizarConfront(confronto);
         }
     }
 }

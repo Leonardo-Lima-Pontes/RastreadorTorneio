@@ -7,11 +7,11 @@ namespace RastreadorBiblioteca.AcessoDeDados
 {
     public interface IConexaoDeDados
     {
-        PremioModelo CriaPremio(PremioModelo modelo);
+        void CriaPremio(PremioModelo modelo);
 
-        PessoaModelo CriaPessoa(PessoaModelo pessoa);
+        void CriaPessoa(PessoaModelo pessoa);
 
-        TimeModelo CriaTime(TimeModelo time);
+        void CriaTime(TimeModelo time);
 
         void CriaTorneio(TorneioModelo torneio);
 

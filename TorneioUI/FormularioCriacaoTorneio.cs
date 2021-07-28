@@ -120,6 +120,10 @@ namespace TorneioUI
             TorneioLogica.CriarRodadas(torneio);
 
             ConfiguracaoGlobal.Conexao.CriaTorneio(torneio);
+
+            FumularioVisualizadorTorneio formularioVisualizadorTorneio = new FumularioVisualizadorTorneio(torneio);
+            formularioVisualizadorTorneio.Show();
+            this.Close();
         }
     }
 }

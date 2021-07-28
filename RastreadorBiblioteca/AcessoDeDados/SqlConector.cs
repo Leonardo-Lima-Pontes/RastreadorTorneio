@@ -18,7 +18,7 @@ namespace RastreadorBiblioteca.AcessoDeDados
         /// </summary>
         /// <param name="pessoa">Informações de pessoa</param>
         /// <returns>Informações de pessoa, incluindo o identificador unico</returns>
-        public PessoaModelo CriaPessoa(PessoaModelo pessoa)
+        public void CriaPessoa(PessoaModelo pessoa)
         {
             using (IDbConnection conexao = new System.Data.SqlClient.SqlConnection(ConfiguracaoGlobal.ConexaoString(bd)))
             {
@@ -33,8 +33,6 @@ namespace RastreadorBiblioteca.AcessoDeDados
                 conexao.Execute("dbo.spPessoas_Insercao", p, commandType: CommandType.StoredProcedure);
 
                 pessoa.Id = p.Get<int>("@id");
-
-                return pessoa;
             }
         }
 
@@ -44,7 +42,7 @@ namespace RastreadorBiblioteca.AcessoDeDados
         /// </summary>
         /// <param name="modelo">Informações do prêmio</param>
         /// <returns>As informações do prêmio, incluindo o identificador unico </returns>
-        public PremioModelo CriaPremio(PremioModelo premio)
+        public void CriaPremio(PremioModelo premio)
         {
             using (IDbConnection conexao = new System.Data.SqlClient.SqlConnection(ConfiguracaoGlobal.ConexaoString(bd)))
             {
@@ -58,8 +56,6 @@ namespace RastreadorBiblioteca.AcessoDeDados
                 conexao.Execute("dbo.spPremios_Insercao", p, commandType: CommandType.StoredProcedure);
 
                 premio.Id = p.Get<int>("@id");
-
-                return premio;
             }
         }
 
@@ -68,7 +64,7 @@ namespace RastreadorBiblioteca.AcessoDeDados
         /// </summary>
         /// <param name="time">Informações do objeto time</param>
         /// <returns>As informações do time incluindo o identificador unico</returns>
-        public TimeModelo CriaTime(TimeModelo time)
+        public void CriaTime(TimeModelo time)
         {
             using (IDbConnection conexao = new System.Data.SqlClient.SqlConnection(ConfiguracaoGlobal.ConexaoString(bd)))
             {
@@ -81,8 +77,6 @@ namespace RastreadorBiblioteca.AcessoDeDados
                 time.Id = p.Get<int>("@id");
 
                 SalvaTimeMembros(conexao, time);
-
-                return time;
             }
         }
 
@@ -120,6 +114,8 @@ namespace RastreadorBiblioteca.AcessoDeDados
                 SalvaTorneioEntrada(conexao, torneio);
 
                 SalvarTorneioPartidas(conexao, torneio);
+
+                TorneioLogica.AtualizarReusultadosTorneio(torneio);
             }
         }
 
@@ -355,20 +351,27 @@ namespace RastreadorBiblioteca.AcessoDeDados
         {
             using (IDbConnection conexao = new System.Data.SqlClient.SqlConnection(ConfiguracaoGlobal.ConexaoString(bd)))
             {
-                var p = new DynamicParameters();
-                p.Add("@id", confronto.Id);
-                p.Add("@VencedorId", confronto.Vencedor.Id);
+                var p = new DynamicParameters(); 
+                if (confronto.Vencedor != null)
+                {
 
-                conexao.Execute("dbo.spConfrontos_Atualizar", p, commandType: CommandType.StoredProcedure);
+                    p.Add("@id", confronto.Id);
+                    p.Add("@VencedorId", confronto.Vencedor.Id);
+
+                    conexao.Execute("dbo.spConfrontos_Atualizar", p, commandType: CommandType.StoredProcedure);
+                }
 
                 foreach (TimeConfrontoModelo timeConfronto in confronto.TimeCompetindo)
                 {
-                    p = new DynamicParameters();
-                    p.Add("@id", timeConfronto.Id);
-                    p.Add("@TimeCompetindoId", timeConfronto.TimeCompetindo.Id);
-                    p.Add("@Pontuacao", timeConfronto.Pontuacao);
+                    if (timeConfronto.TimeCompetindo != null)
+                    {
+                        p = new DynamicParameters();
+                        p.Add("@id", timeConfronto.Id);
+                        p.Add("@TimeCompetindoId", timeConfronto.TimeCompetindo.Id);
+                        p.Add("@Pontuacao", timeConfronto.Pontuacao);
 
-                    conexao.Execute("dbo.spConfrontoEntrada_Atualizar", p, commandType: CommandType.StoredProcedure);
+                        conexao.Execute("dbo.spConfrontoEntrada_Atualizar", p, commandType: CommandType.StoredProcedure); 
+                    }
                 }
             }
         }

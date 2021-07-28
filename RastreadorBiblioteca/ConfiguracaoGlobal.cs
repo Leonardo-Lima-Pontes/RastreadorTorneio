@@ -39,6 +39,11 @@ namespace RastreadorBiblioteca
         {
             return ConfigurationManager.ConnectionStrings[nome].ConnectionString;
         }
+
+        public static string AppKey(string key)
+        {
+            return ConfigurationManager.AppSettings[key];
+        }
     }
 }
 

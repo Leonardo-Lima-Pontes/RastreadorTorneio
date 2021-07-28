@@ -96,10 +96,10 @@ namespace RastreadorBiblioteca.AcessoDeDados.ConectorDeTexto
         /// <param name="lines">linhas do arquivo</param>
         /// <param name="pessoaNomeArquivo">lista de times</param>
         /// <returns></returns>
-        public static List<TimeModelo> ConverterParaTimeModelo(this List<string> lines, string pessoaNomeArquivo)
+        public static List<TimeModelo> ConverterParaTimeModelo(this List<string> lines)
         {
             List<TimeModelo> saidaTimeModelo = new List<TimeModelo>();
-            List<PessoaModelo> pessoas = pessoaNomeArquivo.CaminhoArquivoCompleto().CarregarArquivo().ConverterParaPessoaModelo();
+            List<PessoaModelo> pessoas = ConfiguracaoGlobal.PessoaArquivo.CaminhoArquivoCompleto().CarregarArquivo().ConverterParaPessoaModelo();
 
             foreach (string line in lines)
             {
@@ -122,14 +122,11 @@ namespace RastreadorBiblioteca.AcessoDeDados.ConectorDeTexto
             return saidaTimeModelo;
         }
 
-        public static List<TorneioModelo> ConverterParaTorneioModelo(this List<string> lines,
-            string timeArquivo,
-            string pessoaArquivo,
-            string premioArquivo)
+        public static List<TorneioModelo> ConverterParaTorneioModelo(this List<string> lines)
         {
             List<TorneioModelo> saidaTorneio = new List<TorneioModelo>();
-            List<TimeModelo> times = timeArquivo.CaminhoArquivoCompleto().CarregarArquivo().ConverterParaTimeModelo(pessoaArquivo);
-            List<PremioModelo> premios = premioArquivo.CaminhoArquivoCompleto().CarregarArquivo().ConverterParaPremioModelo();
+            List<TimeModelo> times = ConfiguracaoGlobal.TimeArquivo.CaminhoArquivoCompleto().CarregarArquivo().ConverterParaTimeModelo();
+            List<PremioModelo> premios = ConfiguracaoGlobal.PremioArquivo.CaminhoArquivoCompleto().CarregarArquivo().ConverterParaPremioModelo();
             List<ConfrontoModelo> confrontos = ConfiguracaoGlobal.ConfrontoArquivo.CaminhoArquivoCompleto().CarregarArquivo().ConverterParaConfrontoModelo();
 
             foreach (string line in lines)
@@ -184,7 +181,7 @@ namespace RastreadorBiblioteca.AcessoDeDados.ConectorDeTexto
         /// </summary>
         /// <param name="modelos">Lista de premios</param>
         /// <param name="nomeArquivo">Caminho onde o arquivo deve ser salvo</param>
-        public static void SalvarParaPremioArquivo(this List<PremioModelo> modelos, string nomeArquivo)
+        public static void SalvarParaPremioArquivo(this List<PremioModelo> modelos)
         {
             List<string> linhas = new List<string>();
 
@@ -193,7 +190,7 @@ namespace RastreadorBiblioteca.AcessoDeDados.ConectorDeTexto
                 linhas.Add($"{p.Id}, {p.NumeroColocacao}, {p.ColocacaoNome}, {p.PremioValor}, {p.PremioPorcentagem}");
             }
 
-            File.WriteAllLines(nomeArquivo.CaminhoArquivoCompleto(), linhas);
+            File.WriteAllLines(ConfiguracaoGlobal.PremioArquivo.CaminhoArquivoCompleto(), linhas);
         }
 
         /// <summary>
@@ -201,7 +198,7 @@ namespace RastreadorBiblioteca.AcessoDeDados.ConectorDeTexto
         /// </summary>
         /// <param name="modelos">Lista de pessoas</param>
         /// <param name="nomeArquivo">Caminho onde o arquivo deve ser salvo</param>
-        public static void SalvarParaPessoaArquivo(this List<PessoaModelo> modelos, string nomeArquivo)
+        public static void SalvarParaPessoaArquivo(this List<PessoaModelo> modelos)
         {
             List<string> linhas = new List<string>();
 
@@ -210,10 +207,10 @@ namespace RastreadorBiblioteca.AcessoDeDados.ConectorDeTexto
                 linhas.Add($"{p.Id}, {p.PrimeiroNome}, {p.UltimoNome}, {p.Telefone}, {p.Email}, {p.DataCriacao}");
             }
 
-            File.WriteAllLines(nomeArquivo.CaminhoArquivoCompleto(), linhas);
+            File.WriteAllLines(ConfiguracaoGlobal.PessoaArquivo.CaminhoArquivoCompleto(), linhas);
         }
 
-        public static void SalvarParaTimeArquivo(this List<TimeModelo> modelos, string nomeArquivo)
+        public static void SalvarParaTimeArquivo(this List<TimeModelo> modelos)
         {
             List<string> linhas = new List<string>();
 
@@ -222,10 +219,10 @@ namespace RastreadorBiblioteca.AcessoDeDados.ConectorDeTexto
                 linhas.Add($"{time.Id }, {time.NomeTime}, {ConverterPessoasListaParaString(time.MembrosTime)}");
             }
 
-            File.WriteAllLines(nomeArquivo.CaminhoArquivoCompleto(), linhas);
+            File.WriteAllLines(ConfiguracaoGlobal.TimeArquivo.CaminhoArquivoCompleto(), linhas);
         }
 
-        public static void SalvarParaTorneioArquivo(this List<TorneioModelo> modelos, string nomeArquivo)
+        public static void SalvarParaTorneioArquivo(this List<TorneioModelo> modelos)
         {
             List<string> linhas = new List<string>();
 
@@ -239,7 +236,7 @@ namespace RastreadorBiblioteca.AcessoDeDados.ConectorDeTexto
                         {ConveterRodadasParaString(torneio.Rodadas)}");
             }
 
-            File.WriteAllLines(nomeArquivo.CaminhoArquivoCompleto(), linhas);
+            File.WriteAllLines(ConfiguracaoGlobal.TorneioArquivo.CaminhoArquivoCompleto(), linhas);
         }
 
         private static string ConveterRodadasParaString(List<List<ConfrontoModelo>> rodadas)
@@ -337,13 +334,13 @@ namespace RastreadorBiblioteca.AcessoDeDados.ConectorDeTexto
             return saida;
         }
 
-        public static void SalvarRodadasParaArquivo(this TorneioModelo modelo, string confrontoArquivo, string timeConfrontoArquivo)
+        public static void SalvarRodadasParaArquivo(this TorneioModelo modelo)
         {
             foreach (List<ConfrontoModelo> rodada in modelo.Rodadas)
             {
                 foreach (ConfrontoModelo confronto in rodada)
                 {
-                    confronto.SalvarConfrontoParaArquivo(confrontoArquivo, timeConfrontoArquivo);
+                    confronto.SalvarConfrontoParaArquivo();
                 }
             }
         }
@@ -393,7 +390,7 @@ namespace RastreadorBiblioteca.AcessoDeDados.ConectorDeTexto
 
         private static TimeModelo PegarIdDoTime(int id)
         {
-            List<TimeModelo> times = ConfiguracaoGlobal.TimeArquivo.CaminhoArquivoCompleto().CarregarArquivo().ConverterParaTimeModelo(ConfiguracaoGlobal.PessoaArquivo);
+            List<TimeModelo> times = ConfiguracaoGlobal.TimeArquivo.CaminhoArquivoCompleto().CarregarArquivo().ConverterParaTimeModelo();
             return times.Where(x => x.Id == id).First();
         }
 
@@ -424,7 +421,7 @@ namespace RastreadorBiblioteca.AcessoDeDados.ConectorDeTexto
             return confrontoSaida;
         }
 
-        public static void SalvarConfrontoParaArquivo(this ConfrontoModelo confronto, string confrontoArquivo, string timeConfrontoArquivo)
+        public static void SalvarConfrontoParaArquivo(this ConfrontoModelo confronto)
         {
             List<ConfrontoModelo> confrontos = ConfiguracaoGlobal.ConfrontoArquivo.CaminhoArquivoCompleto().CarregarArquivo().ConverterParaConfrontoModelo();
 
@@ -439,7 +436,7 @@ namespace RastreadorBiblioteca.AcessoDeDados.ConectorDeTexto
 
             foreach (TimeConfrontoModelo timeConfronto in confronto.TimeCompetindo)
             {
-                timeConfronto.SalvarTimeConfrontoParaArquivo(timeConfrontoArquivo);
+                timeConfronto.SalvarTimeConfrontoParaArquivo();
             }
 
             List<string> linhas = new List<string>();
@@ -458,7 +455,7 @@ namespace RastreadorBiblioteca.AcessoDeDados.ConectorDeTexto
 
         }
 
-        public static void SalvarTimeConfrontoParaArquivo(this TimeConfrontoModelo timeConfronto, string timeConfrontoArquivo)
+        public static void SalvarTimeConfrontoParaArquivo(this TimeConfrontoModelo timeConfronto)
         {
             List<TimeConfrontoModelo> timeConfrontos = ConfiguracaoGlobal.TimeConfrontoArquivo.CaminhoArquivoCompleto().CarregarArquivo().ConveterParaTimeConfrontoModelo();
 

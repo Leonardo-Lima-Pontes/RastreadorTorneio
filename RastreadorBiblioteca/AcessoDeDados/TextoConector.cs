@@ -10,21 +10,14 @@ namespace RastreadorBiblioteca.AcessoDeDados
     public class TextoConector : IConexaoDeDados
     {
 
-        private const string PremioArquivo = "PremioModelo.csv";
-        private const string PessoaArquivo = "PessoaModelo.csv";
-        private const string TimeArquivo = "TimeModelo.csv";
-        private const string TorneioArquivo = "TorneioModelo.csv";
-        private const string ConfrontoArquivo = "ConfrontoModelo.csv";
-        private const string TimeConfrontoArquivo = "TimeConfrontoModelo.csv";
-
         public void AtualizarConfront(ConfrontoModelo confronto)
         {
             throw new NotImplementedException();
         }
 
-        public PessoaModelo CriaPessoa(PessoaModelo modelo)
+        public void CriaPessoa(PessoaModelo modelo)
         {
-            List<PessoaModelo> pessoas = PessoaArquivo.CaminhoArquivoCompleto().CarregarArquivo().ConverterParaPessoaModelo();
+            List<PessoaModelo> pessoas = ConfiguracaoGlobal.PessoaArquivo.CaminhoArquivoCompleto().CarregarArquivo().ConverterParaPessoaModelo();
 
             int idAtual = 1;
 
@@ -37,14 +30,12 @@ namespace RastreadorBiblioteca.AcessoDeDados
 
             pessoas.Add(modelo);
 
-            pessoas.SalvarParaPessoaArquivo(PessoaArquivo);
-
-            return modelo;
+            pessoas.SalvarParaPessoaArquivo();
         }
 
-        public PremioModelo CriaPremio(PremioModelo modelo)
+        public void CriaPremio(PremioModelo modelo)
         {
-            List<PremioModelo> premios =  PremioArquivo.CaminhoArquivoCompleto().CarregarArquivo().ConverterParaPremioModelo();
+            List<PremioModelo> premios = ConfiguracaoGlobal.PremioArquivo.CaminhoArquivoCompleto().CarregarArquivo().ConverterParaPremioModelo();
 
             int idAtual = 1;
 
@@ -57,14 +48,12 @@ namespace RastreadorBiblioteca.AcessoDeDados
 
             premios.Add(modelo);
 
-            premios.SalvarParaPremioArquivo(PremioArquivo);
-
-            return modelo;
+            premios.SalvarParaPremioArquivo();
         }
 
-        public TimeModelo CriaTime(TimeModelo modelo)
+        public void CriaTime(TimeModelo modelo)
         {
-            List<TimeModelo> times = TimeArquivo.CaminhoArquivoCompleto().CarregarArquivo().ConverterParaTimeModelo(PessoaArquivo);
+            List<TimeModelo> times = ConfiguracaoGlobal.TimeArquivo.CaminhoArquivoCompleto().CarregarArquivo().ConverterParaTimeModelo();
 
             int idAtual = 1;
 
@@ -77,17 +66,15 @@ namespace RastreadorBiblioteca.AcessoDeDados
 
             times.Add(modelo);
 
-            times.SalvarParaTimeArquivo(TimeArquivo);
-
-            return modelo;
+            times.SalvarParaTimeArquivo();
         }
 
         public void CriaTorneio(TorneioModelo modelo)
         {
-            List<TorneioModelo> torneios = TorneioArquivo
+            List<TorneioModelo> torneios = ConfiguracaoGlobal.TorneioArquivo
                 .CaminhoArquivoCompleto()
                 .CarregarArquivo()
-                .ConverterParaTorneioModelo(TimeArquivo, PessoaArquivo, PremioArquivo);
+                .ConverterParaTorneioModelo();
 
             int idAtual = 1;
 
@@ -98,22 +85,22 @@ namespace RastreadorBiblioteca.AcessoDeDados
 
             modelo.Id = idAtual;
 
-            modelo.SalvarRodadasParaArquivo(ConfrontoArquivo, TimeConfrontoArquivo);
+            modelo.SalvarRodadasParaArquivo();
 
             torneios.Add(modelo);
 
-            torneios.SalvarParaTorneioArquivo(TorneioArquivo);
+            torneios.SalvarParaTorneioArquivo();
         }
 
 
         public List<PessoaModelo> SelecionarTodasPessoas()
         {
-            return PessoaArquivo.CaminhoArquivoCompleto().CarregarArquivo().ConverterParaPessoaModelo();
+            return ConfiguracaoGlobal.PessoaArquivo.CaminhoArquivoCompleto().CarregarArquivo().ConverterParaPessoaModelo();
         }
 
         public List<TimeModelo> SelecionarTodosTimes()
         {
-            return TimeArquivo.CaminhoArquivoCompleto().CarregarArquivo().ConverterParaTimeModelo(PessoaArquivo);
+            return ConfiguracaoGlobal.TimeArquivo.CaminhoArquivoCompleto().CarregarArquivo().ConverterParaTimeModelo();
         }
 
         public List<TorneioModelo> SelecionarTodosTorneios()

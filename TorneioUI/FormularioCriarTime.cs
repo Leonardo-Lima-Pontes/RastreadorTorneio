@@ -60,7 +60,7 @@ namespace TorneioUI
                 pessoa.Email = EmailTextBox.Text;
                 pessoa.DataCriacao = DateTime.Now;
 
-                pessoa = ConfiguracaoGlobal.Conexao.CriaPessoa(pessoa);
+                ConfiguracaoGlobal.Conexao.CriaPessoa(pessoa);
                 pessoasSelecionadas.Add(pessoa);
 
                 preencherListas();
